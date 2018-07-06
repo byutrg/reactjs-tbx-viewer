@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import Input from '@material-ui/core/Input'
 import $ from 'jquery'
 
+import Languages from '../data/isoLangCodesKeyed'
+
 import styles from '../styled/styles'
 
 class TermBlock extends Component {
@@ -65,15 +67,20 @@ class TermBlock extends Component {
     }
   }
 
-  collapseLangBlock(lang) {
-    let hasOwn = {}.hasOwnProperty
-    let langObj = this.state.langDict[lang]
-    let langRef = langObj.ownRef
-
-    langObj.refs.forEach(ref => {
-      this.refs[ref].style.display = (this.refs[ref].style.display === 'none') ?
-                  'inline' : 'none'
-    })
+  collapseLangBlock(langRef) {
+    if (this.refs[langRef].style.display === 'none') {
+        this.refs[langRef].style.display = 'block'
+        this.refs[langRef+'_arrow'].style.borderTop = '5px solid #D8D8D8'
+        this.refs[langRef+'_arrow'].style.borderRight = '5px solid transparent'
+        this.refs[langRef+'_arrow'].style.borderLeft = '5px solid transparent'
+        this.refs[langRef+'_arrow'].style.borderBottom = ''
+      } else {
+        this.refs[langRef].style.display = 'none'
+        this.refs[langRef+'_arrow'].style.borderTop = '5px solid transparent'
+        this.refs[langRef+'_arrow'].style.borderRight = '5px solid #D8D8D8'
+        this.refs[langRef+'_arrow'].style.borderLeft = ''
+        this.refs[langRef+'_arrow'].style.borderBottom = '5px solid transparent'
+      }
   }
 
   render() {
@@ -93,8 +100,11 @@ class TermBlock extends Component {
           })
 
           langBlocks.push(
-            <div key={`l${key}`} ref={`l${key}`} style={styles.termBlockLangBlock}>
-              <strong onClick={e => this.collapseLangBlock(e.target.innerText)}>{key}</strong>
+            <div key={`l${key}`} style={styles.termBlockLangBlock}>
+              <strong onClick={e => this.collapseLangBlock(`l${key}`)}>{Languages[key]}</strong>
+              <div ref={`l${key}_arrow`} style={styles.collapseArrowDown}/>
+              <div style={styles.termBlockListLine}/>
+              <div ref={`l${key}`}>
               {
                 termsByLang[key].map(termSec => {
                     let ref = `c${termSec.conceptIndex}l${termSec.langIndex}t${termSec.ownIndex}`
@@ -111,6 +121,7 @@ class TermBlock extends Component {
                   }
                 )
               }
+              </div>
             </div>
           )
         }

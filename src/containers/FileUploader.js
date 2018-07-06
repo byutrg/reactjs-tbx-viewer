@@ -17,6 +17,7 @@ class FileUploader extends Component {
   render() {
     return (
       <div>
+        <h1>Select a TBX file to use in the Viewer.</h1>
           <Button
             variant="raised"
             label="Upload TBX file"

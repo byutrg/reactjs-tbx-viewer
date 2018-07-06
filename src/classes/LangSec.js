@@ -9,14 +9,28 @@ class LangSec extends TBXLevel {
     super(langSec, 'termSec *, tig *', indices.langIndex, indices.conceptIndex)
 
     this._conceptIndex = indices.conceptIndex
-    this._langCode = $(langSec).attr('xml:lang') || ''
+
+    let code = ''
+    let region = ''
+    if ($(langSec).attr('xml:lang').includes('-')) {
+      code = $(langSec).attr('xml:lang').replace(/-.+/, '')
+      region = $(langSec).attr('xml:lang').replace(/.+?-/, '')
+    } else {
+      code = $(langSec).attr('xml:lang')
+    }
+
+    this._langCode = code
+    this._regionCode = region
+    this._xmlLang = $(langSec).attr('xml:lang') || ''
     this._termSecs = $(langSec).find('termSec, tig').map((index, termSec) => {
       return new TermSec(termSec, { termIndex: index, langIndex: indices.langIndex, conceptIndex: indices.conceptIndex})
     })
   }
 
-  get langCode() { return this._langCode }
-  get termSecs() { return this._termSecs }
+  get langCode()    { return this._langCode   }
+  get regionCode()  { return this._regionCode }
+  get xmlLang()     { return this._xmlLang    }
+  get termSecs()    { return this._termSecs   }
 
   addTermSec(termSec) {
     this._termSecs.add(termSec)
