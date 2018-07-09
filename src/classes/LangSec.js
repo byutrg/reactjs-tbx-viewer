@@ -6,7 +6,7 @@ import TermSec from './TermSec'
 
 class LangSec extends TBXLevel {
   constructor(langSec, indices = null) {
-    super(langSec, 'termSec *, tig *', indices.langIndex, indices.conceptIndex)
+    super(langSec, 'termSec *, tig *, ntig *', indices.langIndex, indices.conceptIndex)
 
     this._conceptIndex = indices.conceptIndex
 
@@ -22,7 +22,7 @@ class LangSec extends TBXLevel {
     this._langCode = code.toLowerCase()
     this._regionCode = region.toLowerCase()
     this._xmlLang = $(langSec).attr('xml:lang') || ''
-    this._termSecs = $(langSec).find('termSec, tig').map((index, termSec) => {
+    this._termSecs = $(langSec).find('termSec, tig, ntig').map((index, termSec) => {
       return new TermSec(termSec, { termIndex: index, langIndex: indices.langIndex, conceptIndex: indices.conceptIndex})
     })
   }
