@@ -1,10 +1,10 @@
 html {
   height: 100%;
-  min-height: 930px;
+  /* min-height: 930px; */
 }
 
 body {
-  height: 92%;
+  height: 88%;
 }
 
 #root {
