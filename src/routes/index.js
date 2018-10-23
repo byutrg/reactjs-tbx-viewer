@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {HashRouter, Route, Switch} from 'react-router-dom'
 
-import Start from "../containers/Start"
 import Viewer from "../containers/Viewer"
 
 class Router extends Component {
@@ -9,8 +8,7 @@ class Router extends Component {
     return(
       <HashRouter>
         <Switch>
-          <Route exact path='/' component={Start} />
-          <Route path='/viewer' component={Viewer} />
+          <Route path='/' component={Viewer} />
         </Switch>
       </HashRouter>
     )

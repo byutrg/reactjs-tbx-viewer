@@ -10,10 +10,73 @@ const styles = {
         height: '100%'
     },
 
-    indented: {
-    double: {
-        marginLeft: 32
+    blur: {
+        backgroundColor: 'rgba(171,171,171,.8)',
+        position:'fixed',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        zIndex: 1000
     },
+
+    uploadHeader: {
+        backgroundColor: 'white',
+        position: 'relative',
+        margin: '0 auto',
+        top: '15%',
+        width: '55%',
+        height: '20%',
+        verticalAlign: 'middle',
+        borderRadius: 5,
+        h1: {
+            margin: 0,
+            fontFamily: 'sans-serif',
+            fontWeight: 'lighter',
+            textAlign: 'center',
+            color: 'rgba(171,171,171,.8)',
+            display: 'inline-block',
+            paddingTop: '3%',
+            height: '100%',
+            width: '25%',
+            fontSize: 120
+        },
+        p: {
+            display: 'inline-block',
+            height: '30%',
+            width: '70%',
+            color: 'rgba(171,171,171,.8)',
+            fontSize: 45,
+            fontFamily: 'sans-serif',
+            verticalAlign: 'top',
+            borderBottom: '6px solid rgba(171,171,171,.8)',
+            borderRadius: 5
+        }
+    },
+
+    uploadButton: {
+        backgroundColor: 'white',
+        display: 'block',
+        width: '100%',
+        height: '100%',
+        borderRadius: 5,
+        paddingTop: '6%',
+        fontSize: 30,
+        color: 'rgba(171,171,171,.8)',
+        label: {
+            display: 'block',
+            position: 'relative',
+            margin: '0 auto',
+            top: '25%',
+            width: '25%',
+            height: '10%',
+        }
+    },
+
+    indented: {
+        double: {
+            marginLeft: 32
+        },
         marginLeft: 16
     },
 

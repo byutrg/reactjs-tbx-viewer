@@ -21,8 +21,6 @@ class ConceptEntryBlock extends Component {
     let hasOwn = {}.hasOwnProperty
     let content = []
 
-
-
     for (let key in conceptEntry.metadata) {
       if (!hasOwn.call(conceptEntry.metadata, key)) { return }
       let value = conceptEntry.metadata[key]

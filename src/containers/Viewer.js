@@ -4,6 +4,7 @@ import ConceptEntryBlock from '../containers/ConceptEntryBlock'
 import Header from "../containers/Header"
 // import MainWindow from '../containers/MainWindow'
 import TermBlock from '../containers/TermBlock'
+import FileUploader from '../containers/FileUploader'
 
 import TBX from '../classes/TBX'
 
@@ -16,19 +17,33 @@ class Viewer extends Component {
     this.forceUpdate()
   }
 
+  promptFileUpload() {
+    if (!this.state.fileUploaded) {
+      return(
+        <FileUploader
+          self={this}
+          callback={this.loadFile}
+          />
+      )
+    }
+  }
+
+  loadFile(filename) {
+    let tbxFile = new TBX(filename, this.refresh, this)
+
+    this.setState({
+      'TBX': tbxFile,
+      fileUploaded: true
+    })
+  }
+
   constructor(props) {
     super(props)
 
-
-    let tbxFile = (typeof(this.props.location.state) !== 'undefined') ?
-      new TBX(this.props.location.state.filename, this.refresh, this) :
-      this.props.history.push({
-        pathname: "/"
-      })
-
     this.state = {
-      'TBX': tbxFile,
-      conceptEntry: null
+      'TBX': null,
+      conceptEntry: null,
+      fileUploaded: false
     }
   }
 
@@ -44,6 +59,7 @@ class Viewer extends Component {
             ref="termBlock"
           />
           <ConceptEntryBlock self={this} ref="conceptEntryBlock"/>
+          { this.promptFileUpload() }
         </div>
   )}
 
