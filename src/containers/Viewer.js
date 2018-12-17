@@ -5,6 +5,7 @@ import Header from "../containers/Header"
 // import MainWindow from '../containers/MainWindow'
 import TermBlock from '../containers/TermBlock'
 import FileUploader from '../containers/FileUploader'
+import {SchemaPopup, HeaderInfoPopup} from '../containers/popups'
 
 import TBX from '../classes/TBX'
 
@@ -17,15 +18,17 @@ class Viewer extends Component {
     this.forceUpdate()
   }
 
-  promptFileUpload() {
-    if (!this.state.fileUploaded) {
-      return(
-        <FileUploader
-          self={this}
-          callback={this.loadFile}
-          />
-      )
-    }
+  promptFileUpload = () => (
+    <FileUploader
+      self={this}
+      callback={this.loadFile}
+      />
+  )
+
+  popup(content) {
+    this.setState({
+      popup: content
+    })
   }
 
   loadFile(filename) {
@@ -43,7 +46,8 @@ class Viewer extends Component {
     this.state = {
       'TBX': null,
       conceptEntry: null,
-      fileUploaded: false
+      fileUploaded: false,
+      popup: ''
     }
   }
 
@@ -59,7 +63,7 @@ class Viewer extends Component {
             ref="termBlock"
           />
           <ConceptEntryBlock self={this} ref="conceptEntryBlock"/>
-          { this.promptFileUpload() }
+          { (this.state.fileUploaded) ? this.state.popup : this.promptFileUpload() }
         </div>
   )}
 

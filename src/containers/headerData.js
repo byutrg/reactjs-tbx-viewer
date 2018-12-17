@@ -1,5 +1,11 @@
 import React, {Component} from 'react'
 
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+
+import Blur from '../containers/Blur'
+import {SchemaPopup, HeaderInfoPopup} from '../containers/popups'
 import styles from '../styled/styles'
 
 export const HeaderData = (props) => (
@@ -15,14 +21,36 @@ export const HeaderData = (props) => (
   </div>
 )
 
-export const HeaderDataButton = (props) => (
-  <button
-    variant = 'contained'
-    style = {styles.headerData_button}
-    >
-    {props.children}
-  </button>
-)
+class HeaderDataButton extends Component {
+  popup = () => (
+    this.props.self.popup(
+      <SchemaPopup
+        self={this.props.self}
+        >
+        <List component='ul'>
+          { this.props.self.state.TBX.schemas ?
+            this.props.self.state.TBX.schemas.map((x) => (
+              <ListItem>
+                <ListItemText>{x}</ListItemText>
+              </ListItem>
+            )) :
+            'No schemas are associated with this file.'
+          }
+        </List>
+      </SchemaPopup>
+    )
+  )
+
+  render = ()  => (
+    <button
+      variant = 'contained'
+      style = {styles.headerData_button}
+      onClick = { this.popup }
+      >
+      {this.props.children}
+    </button>
+  )
+}
 
 
 export const HeaderDataButtonBlock = (props) => (

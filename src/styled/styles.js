@@ -20,6 +20,27 @@ const styles = {
         zIndex: 1000
     },
 
+    popup: {
+      position: 'relative',
+      width: 600,
+      height: '70%',
+      top: '15%',
+      margin: '0 auto',
+      backgroundColor: '#EAE2D6',
+    },
+
+    popup__content: {
+      position: 'relative',
+      top: 40,
+      margin: 40,
+      height: '90%',
+      backgroundColor: 'white',
+    },
+
+    popup__schema: {
+
+    },
+
     uploadHeader: {
         backgroundColor: 'white',
         position: 'relative',
@@ -89,7 +110,12 @@ const styles = {
         fontSize: 16,
         fontWeight: 'bold',
         borderBottom: '2px solid gray',
-        width: 250
+        width: 250,
+
+        _popup: {
+          fontSize: 32,
+          paddingLeft: 5,
+        }
     },
 
     conceptCard: {
@@ -161,7 +187,7 @@ const styles = {
         padding: 0
     },
 
-        headerData_dcValue: {
+    headerData_dcValue: {
         fontSize: 16,
         margin: 0,
         padding: 0
