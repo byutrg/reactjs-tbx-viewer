@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 
 import Blur from '../containers/Blur'
-import styles from '../styled/styles'
 
 export const SchemaPopup = (props) => (
   <Blur
@@ -9,12 +8,13 @@ export const SchemaPopup = (props) => (
     clickToClose={true}
     >
     <div
-      style={styles.popup}
+      className="popup"
+      onClick={(e) => {e.stopPropagation()}}
       >
       <div
-        style={styles.popup__content}
+        className="popup__content"
         >
-        <p style={{...styles.cardTitle, ...styles.cardTitle._popup}}>
+        <p className="card-title card-title__popup">
            Schemas
         </p>
         {props.children}

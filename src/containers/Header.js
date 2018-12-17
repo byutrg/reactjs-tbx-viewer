@@ -2,12 +2,10 @@ import React, {Component} from 'react'
 
 import {HeaderData, HeaderDataButtonBlock} from '../containers/headerData.js'
 
-import styles from '../styled/styles'
-
 class Header extends Component {
   render = () => (
     <div
-      style = {styles.header}
+      className="header"
     >
       <HeaderData
         dcName="Dialect"

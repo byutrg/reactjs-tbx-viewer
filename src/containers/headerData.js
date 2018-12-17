@@ -6,17 +6,16 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 import Blur from '../containers/Blur'
 import {SchemaPopup, HeaderInfoPopup} from '../containers/popups'
-import styles from '../styled/styles'
 
 export const HeaderData = (props) => (
   <div
-    style = {styles.headerData_block}
+    className = "header-data__block"
   >
     <strong
-      style = {styles.headerData_dcName}
+      className = "header-data__dc-name"
     >{props.dcName}</strong>
     <p
-      style = {styles.headerData_dcValue}
+      className = "header-data__dc-value"
     >{props.dcValue}</p>
   </div>
 )
@@ -44,7 +43,7 @@ class HeaderDataButton extends Component {
   render = ()  => (
     <button
       variant = 'contained'
-      style = {styles.headerData_button}
+      className = "header-data__button"
       onClick = { this.popup }
       >
       {this.props.children}
@@ -55,7 +54,7 @@ class HeaderDataButton extends Component {
 
 export const HeaderDataButtonBlock = (props) => (
   <div
-    style = {styles.headerData_buttonBlock}
+    className = "header-data__button-block"
     >
     <HeaderDataButton
       self = {props.self}

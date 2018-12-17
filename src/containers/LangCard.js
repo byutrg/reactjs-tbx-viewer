@@ -3,8 +3,6 @@ import React, {Component} from 'react'
 import Languages from '../data/isoLangCodesKeyed'
 import Regions from '../data/regionCodesKeyed'
 
-import styles from '../styled/styles'
-
 class LangCard extends Component {
   loadLangContent() {
     let hasOwn = {}.hasOwnProperty
@@ -17,10 +15,10 @@ class LangCard extends Component {
       content.push(
         <div
           key={`l${langSec.ownIndex}-${key}`}
-          style={styles.metadataItem.container}
+          className="metadata-item__container"
           >
-        <strong style={styles.metadataItem.key}>{key}</strong>
-        <p style={styles.metadataItem.value}>
+        <strong className="metadata-item__key">{key}</strong>
+        <p className="metadata-item__value indented">
           {(value.content.includes('http')) ? <a target="_blank" href={value.content}>{value.content}</a> : value.content}
         </p>
         </div>
@@ -30,7 +28,7 @@ class LangCard extends Component {
       content.push(
         <p
           key={`l${langSec.ownIndex}t${termSec.ownIndex}-term`}
-          style={styles.term}>{termSec.term}</p>
+          className="term">{termSec.term}</p>
       )
 
       for (let key in termSec.metadata) {
@@ -40,10 +38,10 @@ class LangCard extends Component {
         content.push(
           <div
             key={`l${langSec.ownIndex}t${termSec.ownIndex}-${key}`}
-            style={[styles.metadataItem, styles.indented]}
+            className="metadata-item indented"
             >
-          <strong style={styles.metadataItem.key}>{key}</strong>
-          <span style={styles.metadataItem.value}>
+          <strong className="metadata-item__key">{key}</strong>
+          <span className="metadata-item__value indented">
             {(value.content.includes('http')) ? <a target="_blank" href={value.content}>{value.content}</a> : value.content}
           </span>
           </div>
@@ -60,9 +58,9 @@ class LangCard extends Component {
     return (
       (this.props.langSec) ?
         <div
-          style={styles.langCard}
+          className="lang-card"
         >
-          <p style={styles.cardTitle}>
+          <p className="card-title">
             {Languages[this.props.langSec.langCode]}
             {(this.props.langSec.regionCode) ? <span> - {Regions[this.props.langSec.regionCode]}</span> : ''}
           </p>

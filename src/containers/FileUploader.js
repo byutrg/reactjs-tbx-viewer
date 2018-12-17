@@ -4,21 +4,19 @@ import {withRouter} from 'react-router-dom'
 
 import Blur from '../containers/Blur'
 
-import styles from '../styled/styles'
-
 import Button from '@material-ui/core/Button'
 
 class UploadHeader extends Component {
   render() {
     return (
       <div
-        style={styles.uploadHeader}
+        className="upload-header"
       >
         <h1
-            style={styles.uploadHeader.h1}
+            className="upload-header__h1"
         >TBX</h1>
         <p
-            style={styles.uploadHeader.p}
+            className="upload-header__p"
             >Viewer</p>
       </div>
     )
@@ -41,10 +39,10 @@ class FileUploader extends Component {
               accept=".tbx, .tbxm, .xml"
               id="contained-button-file"
               />
-          <label style={styles.uploadButton.label} htmlFor="contained-button-file">
+            <label className="upload-button__label" htmlFor="contained-button-file">
               <Button
                 component='span'
-                style={styles.uploadButton}
+                className="upload-button"
                 variant="contained"
               >
                 Select TBX File to Upload

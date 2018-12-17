@@ -9,8 +9,6 @@ import {SchemaPopup, HeaderInfoPopup} from '../containers/popups'
 
 import TBX from '../classes/TBX'
 
-import styles from '../styled/styles'
-
 class Viewer extends Component {
 
   refresh() {
@@ -54,7 +52,7 @@ class Viewer extends Component {
   render() {
     return (
         <div
-          style={styles.mainWindow}
+          className="main-window"
           >
           <Header self={this} ref="header"/>
           <TermBlock

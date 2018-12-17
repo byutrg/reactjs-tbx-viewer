@@ -4,8 +4,6 @@ import $ from 'jquery'
 // import ConceptCard from '../containers/ConceptCard'
 import LangCard from '../containers/LangCard'
 
-import styles from "../styled/styles"
-
 class ConceptEntryBlock extends Component {
   constructor(props) {
     super(props)
@@ -43,10 +41,10 @@ class ConceptEntryBlock extends Component {
           attributes.push(
               <div
                 key={key-attName}
-                style={styles.indented.double}
+                className="indented__double"
               >
-                <strong style={styles.metadataItem.key}>{attName}</strong>
-                <div style={styles.metadataItem.value}>
+                <strong className="metadata-item__key">{attName}</strong>
+                <div className="metadata-item__value indented">
                   {
                     (value.attributes[attName].includes("http")) ?
                       <a target="_blank" href={value.attributes[attName]}>{value.attributes[attName]}</a> :
@@ -57,20 +55,17 @@ class ConceptEntryBlock extends Component {
             )
         }}
 
-
-
-
       content.push(
         <div
           key={`c${conceptEntry.ownIndex}-${key}`}
-          style={styles.metadataItem}
+          className="metadata-item"
           >
-        <strong style={styles.metadataItem.key}>{key}</strong>
-        <span style={styles.metadataItem.value}>{value.content}</span>
+        <strong className="metadata-item__key">{key}</strong>
+        <span className="metadata-item__value">{value.content}</span>
         {attributes}
         </div>
       )
-      }
+    }
 
       let langCards = conceptEntry.langSecs.get().map(langSec => (
         <LangCard
@@ -82,12 +77,12 @@ class ConceptEntryBlock extends Component {
 
       this.setState ({
             'conceptEntry':
-              <div style={styles.conceptEntryBlockContents}>
+              <div className="concept-entry-block-contents">
                 <div
-                  style={styles.conceptCard}
+                  className="concept-card"
                 >
-                  <p style={styles.cardTitle}>ConceptEntry</p>
-                  {content}
+                  <p className="card-title">ConceptEntry</p>
+                  {content || "<p>No concept entry data to display.</p>"}
                 </div>
                 {langCards}
               </div>
@@ -99,7 +94,7 @@ class ConceptEntryBlock extends Component {
 
     return (
       <div
-        style={styles.conceptEntryBlock}
+        className="concept-entry-block"
       >
         { this.state.conceptEntry }
       </div>

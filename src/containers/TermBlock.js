@@ -4,8 +4,6 @@ import $ from 'jquery'
 
 import Languages from '../data/isoLangCodesKeyed'
 
-import styles from '../styled/styles'
-
 class TermBlock extends Component {
   //
   // constructor(props) {
@@ -100,10 +98,10 @@ class TermBlock extends Component {
           })
 
           langBlocks.push(
-            <div key={`l${key}`} style={styles.termBlockLangBlock}>
+            <div key={`l${key}`} className="term-block-lang-block">
               <strong onClick={e => this.collapseLangBlock(`l${key}`)}>{Languages[key]}</strong>
-              <div ref={`l${key}_arrow`} style={styles.collapseArrowDown}/>
-              <div style={styles.termBlockListLine}/>
+              <div ref={`l${key}_arrow`} className="collapse-arrow-down"/>
+              <div className="term-block-list-line"/>
               <div ref={`l${key}`}>
               {
                 termsByLang[key].map(termSec => {
@@ -111,7 +109,7 @@ class TermBlock extends Component {
 
                     return (
                       <p
-                        style={styles.termBlockListItem}
+                        className="term-block-list-item"
                         key={ref}
                         onClick={(e) => this.handleClick(ref, termSec)}
                         >
@@ -129,26 +127,26 @@ class TermBlock extends Component {
 
       return (
         <div
-          style={styles.termBlock}
+          className="term-block"
           >
-          <p style={styles.termBlockTitle}>Terms</p>
+          <p className="term-block-title">Terms</p>
           <Input
             placeholder="Search"
             type="search"
             ref="termSearch"
-            style={styles.termBlockSearch}
+            className="term-block-search"
             onChange={e => this.search(e.target.value)}
            />
           <div
-            style={styles.termBlockListContainer}
+            className="term-block-list-container"
             >
             <div
-              style={styles.termBlockList}
+              className="term-block-list"
             >
               {langBlocks}
             </div>
             <button
-              style={styles.termBlockLangButton}
+              className="term-block-lang-button"
             >Languages</button>
           </div>
         </div>
