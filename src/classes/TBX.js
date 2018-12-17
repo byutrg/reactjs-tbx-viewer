@@ -1,8 +1,6 @@
 import React from 'react'
 import $ from 'jquery'
 
-import styles from '../styled/styles'
-
 import TBXHeader from './TBXHeader'
 import ConceptEntry from './ConceptEntry'
 import LangSec from './LangSec'
@@ -166,7 +164,7 @@ class TBX {
         let xmlDoc = $.parseXML(this.contents)
         let $tbx = $(xmlDoc)
 
-        this.dialect = $tbx.find("tbx, martif").attr('type') || $tbx.find("TBX").attr("dialect") || <span style={styles.error}>Undeclared</span>
+        this.dialect = $tbx.find("tbx, martif").attr('type') || $tbx.find("TBX").attr("dialect") || <span className="error">Undeclared</span>
 
         let isOldMin = (this.dialect === "TBX-Min")
         this.style = (isOldMin) ? 'dct' : $tbx.find("tbx").attr('style') || 'dca'
