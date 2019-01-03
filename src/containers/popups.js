@@ -23,10 +23,23 @@ export const SchemaPopup = (props) => (
   </Blur>
 )
 
-export const HeaderInfoPopup = () => (
-  <Blur>
-    <div>
-      <textArea/>
+export const HeaderInfoPopup = (props) => (
+  <Blur
+    self={props.self}
+    clickToClose={true}
+    >
+    <div
+      className="popup"
+      onClick={(e) => {e.stopPropagation()}}
+      >
+      <div
+        className="popup__content"
+        >
+        <p className="card-title card-title__popup">
+           Header Info
+        </p>
+        {props.children}
+      </div>
     </div>
   </Blur>
 )

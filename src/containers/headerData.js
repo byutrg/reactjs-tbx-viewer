@@ -21,29 +21,58 @@ export const HeaderData = (props) => (
 )
 
 class HeaderDataButton extends Component {
-  popup = () => (
-    this.props.self.popup(
-      <SchemaPopup
-        self={this.props.self}
-        >
-        <List component='ul'>
-          { this.props.self.state.TBX.schemas ?
-            this.props.self.state.TBX.schemas.map((x) => (
-              <ListItem>
-                <ListItemText>{x}</ListItemText>
-              </ListItem>
-            )) :
-            'No schemas are associated with this file.'
-          }
-        </List>
-      </SchemaPopup>
-    )
-  )
+  popup = () => {
+    if (this.props.type === "schema") {
+      this.props.self.popup(
+        <SchemaPopup
+          self={this.props.self}
+          >
+          <List component='ul'>
+            { this.props.self.state.TBX.schemas ?
+              this.props.self.state.TBX.schemas.map((x) => (
+                <ListItem>
+                  <ListItemText>{x}</ListItemText>
+                </ListItem>
+              )) :
+              'No schemas are associated with this file.'
+            }
+          </List>
+        </SchemaPopup>
+      )
+    }
+    else if (this.props.type === "tbxHeader") {
+      this.props.self.popup(
+        <HeaderInfoPopup
+          self={this.props.self}
+          >
+          <List component='ul'>
+            { this.props.self.state.TBX.tbxHeader ?
+              Object.keys(this.props.self.state.TBX.tbxHeader.metadata)
+              .map(key => (
+                this.props.self.state.TBX.tbxHeader.metadata[key]  &&
+                  <ListItem>
+                    <ListItemText>
+                      <strong className="metadata-item__key">{key}</strong>
+                      <span className="metadata-item__value">
+                        {this.props.self.state.TBX.tbxHeader.metadata[key]}
+                      </span>
+                    </ListItemText>
+                  </ListItem>
+
+              )) :
+              'No schemas are associated with this file.'
+            }
+          </List>
+        </HeaderInfoPopup>
+      )
+    }
+  }
 
   render = ()  => (
     <button
       variant = 'contained'
       className = "header-data__button"
+      type = { this.props.type }
       onClick = { this.popup }
       >
       {this.props.children}
@@ -58,11 +87,13 @@ export const HeaderDataButtonBlock = (props) => (
     >
     <HeaderDataButton
       self = {props.self}
+      type = "schema"
       >
       <span style={{color: 'black'}}>Schema(s)</span>
     </HeaderDataButton>
     <HeaderDataButton
       self = {props.self}
+      type = "tbxHeader"
       >
       <span style={{color: 'black'}}>Header Info</span>
     </HeaderDataButton>
