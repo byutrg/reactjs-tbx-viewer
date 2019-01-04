@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import Input from '@material-ui/core/Input'
-import $ from 'jquery'
 
 import Languages from '../data/isoLangCodesKeyed'
 

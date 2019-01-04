@@ -1,12 +1,6 @@
-import React from 'react'
 import $ from 'jquery'
 
 class TBXHeader {
-  flatten_metadata() {
-    let items = [this.metadata.publicationStmt, this.metadata.sourceDesc, this.metadata.title, this.metadata.titleNote]
-    return items
-  }
-
   constructor(tbxHeader) {
     let $tbxHeader = $(tbxHeader)
 

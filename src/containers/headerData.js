@@ -4,8 +4,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 
-import Blur from '../containers/Blur'
-import {SchemaPopup, HeaderInfoPopup} from '../containers/popups'
+import {SchemaPopup, HeaderInfoPopup, YesNoPopup} from '../containers/popups'
 
 export const HeaderData = (props) => (
   <div
@@ -23,47 +22,70 @@ export const HeaderData = (props) => (
 class HeaderDataButton extends Component {
   popup = () => {
     if (this.props.type === "schema") {
+      let content = (
+        <List component='ul'>
+        { this.props.self.state.TBX.schemas.map((x,index) => (
+          <ListItem key={"schema_"+index}>
+            <ListItemText>{x}</ListItemText>
+          </ListItem>
+          ))
+        }
+        </List>
+      )
+      console.log(content)
+
       this.props.self.popup(
         <SchemaPopup
           self={this.props.self}
           >
-          <List component='ul'>
-            { this.props.self.state.TBX.schemas ?
-              this.props.self.state.TBX.schemas.map((x) => (
-                <ListItem>
-                  <ListItemText>{x}</ListItemText>
-                </ListItem>
-              )) :
+            {
+              content ? content :
               'No schemas are associated with this file.'
             }
-          </List>
         </SchemaPopup>
       )
     }
     else if (this.props.type === "tbxHeader") {
+      let content = (this.props.self.state.TBX.tbxHeader.metadata) ? (  ////CONTENT IS STILL NOT OUTPUTING 'no header ...' when values are empty
+        <List component='ul'>
+        {
+          Object.keys(this.props.self.state.TBX.tbxHeader.metadata)
+          .map((key,index) => (
+            this.props.self.state.TBX.tbxHeader.metadata[key] &&
+              <ListItem key={"headerItem_"+index}>
+                <ListItemText>
+                  <strong className="metadata-item__key">{key}</strong>
+                  <span className="metadata-item__value">
+                    {this.props.self.state.TBX.tbxHeader.metadata[key]}
+                  </span>
+                </ListItemText>
+              </ListItem>
+            ))
+          }
+        </List>
+      ) : 'No header info is associated with this file.'
+
       this.props.self.popup(
         <HeaderInfoPopup
           self={this.props.self}
           >
-          <List component='ul'>
-            { this.props.self.state.TBX.tbxHeader ?
-              Object.keys(this.props.self.state.TBX.tbxHeader.metadata)
-              .map(key => (
-                this.props.self.state.TBX.tbxHeader.metadata[key]  &&
-                  <ListItem>
-                    <ListItemText>
-                      <strong className="metadata-item__key">{key}</strong>
-                      <span className="metadata-item__value">
-                        {this.props.self.state.TBX.tbxHeader.metadata[key]}
-                      </span>
-                    </ListItemText>
-                  </ListItem>
-
-              )) :
-              'No schemas are associated with this file.'
-            }
-          </List>
+          { content  }
         </HeaderInfoPopup>
+      )
+    }
+    else if (this.props.type === "new") {
+      this.props.self.popup(
+        <YesNoPopup
+          self={this.props.self}
+          yes="Yes"
+          no="No"
+          action={ () => {
+            let reload = window.location.reload
+            reload.apply(window.location)
+          } }
+          >
+          Are you sure you want to close this file and open a new one?
+        </YesNoPopup>
       )
     }
   }
@@ -96,6 +118,12 @@ export const HeaderDataButtonBlock = (props) => (
       type = "tbxHeader"
       >
       <span style={{color: 'black'}}>Header Info</span>
+    </HeaderDataButton>
+    <HeaderDataButton
+      self = {props.self}
+      type = "new"
+      >
+      <span style={{color: 'black'}}>New File</span>
     </HeaderDataButton>
   </div>
 )

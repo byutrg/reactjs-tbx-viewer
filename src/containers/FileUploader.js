@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Redirect} from 'react-router'
 import {withRouter} from 'react-router-dom'
 
 import Blur from '../containers/Blur'

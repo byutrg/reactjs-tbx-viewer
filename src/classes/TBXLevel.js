@@ -1,4 +1,3 @@
-import React from 'react'
 import $ from 'jquery'
 
 class TBXLevel {
@@ -30,7 +29,7 @@ class TBXLevel {
 
     let metadata = {}
 
-    let datcats = $element.find('*[type]').not(this.excludedLevelString)
+    $element.find('*[type]').not(this.excludedLevelString)
                     .each((index, elt) => {
                       let $elt = $(elt)
 

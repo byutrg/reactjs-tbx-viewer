@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import $ from 'jquery'
 
 // import ConceptCard from '../containers/ConceptCard'
 import LangCard from '../containers/LangCard'

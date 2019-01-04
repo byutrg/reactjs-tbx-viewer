@@ -5,7 +5,6 @@ import Header from "../containers/Header"
 // import MainWindow from '../containers/MainWindow'
 import TermBlock from '../containers/TermBlock'
 import FileUploader from '../containers/FileUploader'
-import {SchemaPopup, HeaderInfoPopup} from '../containers/popups'
 
 import TBX from '../classes/TBX'
 
@@ -23,7 +22,7 @@ class Viewer extends Component {
       />
   )
 
-  popup(content) {
+  popup(content = "") {
     this.setState({
       popup: content
     })

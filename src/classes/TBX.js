@@ -3,8 +3,6 @@ import $ from 'jquery'
 
 import TBXHeader from './TBXHeader'
 import ConceptEntry from './ConceptEntry'
-import LangSec from './LangSec'
-import TermSec from './TermSec'
 
 class TBX {
     constructor(file, callback, self) {
@@ -75,7 +73,6 @@ class TBX {
     getTermsByLang() {
       let langSecs = this.getLangSecs()
       let termsByLang = {}
-      let termSecs = []
       langSecs.forEach(langSec => {
         termsByLang[langSec.langCode] = termsByLang[langSec.langCode] || []
 
@@ -168,7 +165,7 @@ class TBX {
 
         let isOldMin = (this.dialect === "TBX-Min")
         this.style = (isOldMin) ? 'dct' : $tbx.find("tbx").attr('style') || 'dca'
-        this.version = (isOldMin || $tbx.find("martif").length > 0) ? '2008' : '2018'
+        this.version = (isOldMin || $tbx.find("martif").length > 0) ? 'v2 (2008)' : 'v3 (2019)'
 
         this.setSchemas()
 
