@@ -9,7 +9,7 @@ class ConceptEntryBlock extends Component {
 
     this.state = {
       conceptEntry:
-        <div>No concept entry selected yet.</div>
+        <div className='concept-entry-block__contents--empty'>No concept entry selected yet.</div>
     }
   }
 
@@ -76,7 +76,7 @@ class ConceptEntryBlock extends Component {
 
       this.setState ({
             'conceptEntry':
-              <div className="concept-entry-block-contents">
+              <div className="concept-entry-block__contents">
                 <div
                   className="concept-card"
                 >

@@ -19,73 +19,104 @@ export const HeaderData = (props) => (
   </div>
 )
 
+class SchemaContent extends Component {
+  render = () => (
+    this.props.self.state.TBX.schemas.length > 0 ?
+    <List component='ul'>
+      { this.props.self.state.TBX.schemas.map((x,index) => (
+        <ListItem key={"schema_"+index}>
+          <ListItemText>{x}</ListItemText>
+        </ListItem>
+        ))
+      }
+    </List> :
+    <p
+      className="popup__content____message">
+      There are no schemas associated with this file.
+    </p>
+  )
+}
+
+class HeaderInfoContent extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      hasHeaderInfo: props.self.state.TBX.tbxHeader.metadata ? true : false
+    }
+  }
+
+  render = () => (
+    this.state.hasHeaderInfo ?
+    <List component='ul'>
+    {
+      Object.keys(this.props.self.state.TBX.tbxHeader.metadata)
+      .map((key,index) => (
+        this.props.self.state.TBX.tbxHeader.metadata[key] &&
+          <ListItem key={"headerItem_"+index}>
+            <ListItemText>
+              <strong className="metadata-item__key">{key}</strong>
+              <span className="metadata-item__value">
+                {this.props.self.state.TBX.tbxHeader.metadata[key]}
+              </span>
+            </ListItemText>
+          </ListItem>
+        ))
+      }
+    </List> :
+    <p
+      className="popup__content____message"
+      >
+      No header information is associated with this file.
+    </p>
+  )
+}
+
+class YesNoContent extends Component {
+  render = () => (
+    <YesNoPopup
+      self={this.props.self}
+      yes="Yes"
+      no="No"
+      action={ () => {
+        let reload = window.location.reload
+        reload.apply(window.location)
+      } }
+      >
+      Are you sure you want to close this file and open a new one?
+    </YesNoPopup>
+  )
+}
+
 class HeaderDataButton extends Component {
   popup = () => {
     if (this.props.type === "schema") {
-      let content = (
-        <List component='ul'>
-        { this.props.self.state.TBX.schemas.map((x,index) => (
-          <ListItem key={"schema_"+index}>
-            <ListItemText>{x}</ListItemText>
-          </ListItem>
-          ))
-        }
-        </List>
-      )
-      console.log(content)
-
       this.props.self.popup(
         <SchemaPopup
           self={this.props.self}
           >
-            {
-              content ? content :
-              'No schemas are associated with this file.'
-            }
+            <SchemaContent
+              self={this.props.self}
+              />
         </SchemaPopup>
       )
     }
     else if (this.props.type === "tbxHeader") {
-      let content = (this.props.self.state.TBX.tbxHeader.metadata) ? (  ////CONTENT IS STILL NOT OUTPUTING 'no header ...' when values are empty
-        <List component='ul'>
-        {
-          Object.keys(this.props.self.state.TBX.tbxHeader.metadata)
-          .map((key,index) => (
-            this.props.self.state.TBX.tbxHeader.metadata[key] &&
-              <ListItem key={"headerItem_"+index}>
-                <ListItemText>
-                  <strong className="metadata-item__key">{key}</strong>
-                  <span className="metadata-item__value">
-                    {this.props.self.state.TBX.tbxHeader.metadata[key]}
-                  </span>
-                </ListItemText>
-              </ListItem>
-            ))
-          }
-        </List>
-      ) : 'No header info is associated with this file.'
-
       this.props.self.popup(
         <HeaderInfoPopup
           self={this.props.self}
           >
-          { content  }
+          <HeaderInfoContent
+            self={this.props.self}
+            />
         </HeaderInfoPopup>
       )
     }
     else if (this.props.type === "new") {
       this.props.self.popup(
-        <YesNoPopup
-          self={this.props.self}
-          yes="Yes"
-          no="No"
-          action={ () => {
-            let reload = window.location.reload
-            reload.apply(window.location)
-          } }
-          >
-          Are you sure you want to close this file and open a new one?
-        </YesNoPopup>
+        <YesNoContent
+          self = {this.props.self}
+          />
       )
     }
   }
@@ -93,7 +124,7 @@ class HeaderDataButton extends Component {
   render = ()  => (
     <button
       variant = 'contained'
-      className = "header-data__button"
+      className = "metadata__button"
       type = { this.props.type }
       onClick = { this.popup }
       >

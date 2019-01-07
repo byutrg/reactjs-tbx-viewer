@@ -5,6 +5,7 @@ import Header from "../containers/Header"
 // import MainWindow from '../containers/MainWindow'
 import TermBlock from '../containers/TermBlock'
 import FileUploader from '../containers/FileUploader'
+import {ErrorPopup} from '../containers/popups'
 
 import TBX from '../classes/TBX'
 
@@ -22,6 +23,21 @@ class Viewer extends Component {
       />
   )
 
+  error(content = "", buttonText = "OK") {
+    this.popup(
+      <ErrorPopup
+        self={this}
+        buttonText={buttonText}
+        action={()=> {
+          let reload = window.location.reload
+          reload.apply(window.location)
+        }}
+        >
+        { content }
+      </ErrorPopup>
+    )
+  }
+
   popup(content = "") {
     this.setState({
       popup: content
@@ -29,7 +45,7 @@ class Viewer extends Component {
   }
 
   loadFile(filename) {
-    let tbxFile = new TBX(filename, this.refresh, this)
+    let tbxFile = new TBX(filename, this.refresh, this, this.error)
 
     this.setState({
       'TBX': tbxFile,

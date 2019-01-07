@@ -3,11 +3,13 @@ import $ from 'jquery'
 
 import TBXHeader from './TBXHeader'
 import ConceptEntry from './ConceptEntry'
+import {ErrorPopup} from '../containers/popups'
 
 class TBX {
-    constructor(file, callback, self) {
+    constructor(file, callback, self, errorCallback = null) {
       this._file = file
       this._callback = callback
+      this._errorCallback = errorCallback
 
       this._dialect = ''
       this._style = ''
@@ -26,7 +28,13 @@ class TBX {
 
       myPromise.then(() => {
         this.process()
-        callback.call(self)
+
+        if (this.error) {
+          errorCallback.call(self,"The uploaded file does not appear to be well-formed XML and is not parseable.")
+        }
+        else {
+          callback.call(self)
+        }
       })
     }
 
@@ -158,14 +166,29 @@ class TBX {
     }
 
     process() {
-        let xmlDoc = $.parseXML(this.contents)
+        let xmlDoc
+        try {
+          xmlDoc = $.parseXML(this.contents)
+        }
+        catch(err) {
+          this.error = true
+          return
+        }
         let $tbx = $(xmlDoc)
 
         this.dialect = $tbx.find("tbx, martif").attr('type') || $tbx.find("TBX").attr("dialect") || <span className="error">Undeclared</span>
 
         let isOldMin = (this.dialect === "TBX-Min")
-        this.style = (isOldMin) ? 'dct' : $tbx.find("tbx").attr('style') || 'dca'
-        this.version = (isOldMin || $tbx.find("martif").length > 0) ? 'v2 (2008)' : 'v3 (2019)'
+        let version = (isOldMin || $tbx.find("martif").length > 0) ? 'v2 (2008)' : ($tbx.find("tbx").length > 0) ? 'v3 (2019)' : 'na'
+        if (version === 'na') {
+          this.style = <span className="error">NA</span>
+          this.version = <span className="error">NOT TBX</span>
+        }
+        else {
+          this.style = (isOldMin) ? 'dct' : $tbx.find("tbx").attr('style') || 'dca'
+          this.version = version
+        }
+
 
         this.setSchemas()
 

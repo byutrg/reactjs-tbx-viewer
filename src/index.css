@@ -5,6 +5,8 @@ html {
 
 body {
   height: 88%;
+  min-height: 650px;
+  min-width: 850px;
 }
 
 #root {
@@ -60,10 +62,13 @@ body {
 
 .popup__content____message {
   position: relative;
-  font-size: 1.5em;
   width: 350px;
   top: 25px;
   margin: 0 auto;
+}
+
+.popup__content____message--large {
+  font-size: 1.5em;
 }
 
 .popup__content____buttonblock {
@@ -73,10 +78,20 @@ body {
   top: 80px;
 }
 
+.popup__content____buttonblock--single {
+  position: relative;
+  width: 200px;
+  left: -10px;
+}
+
 .popup__content____buttonblock button {
   font-size: 1.25em;
-  width: 150px;
+  width: 40%;
   height: 55px;
+}
+
+.popup__content____buttonblock--single button {
+  width: 100%;
 }
 
 .popup__schema	{
@@ -155,7 +170,7 @@ body {
   font-size: 16px;
   font-weight: bold;
   border-bottom: 2px solid gray;
-  width: 250px;
+  width: 350px;
 }
 .card-title__popup	{
   font-size: 32px;
@@ -207,7 +222,7 @@ body {
   float: right;
 }
 
-.header-data__button	{
+.metadata__button	{
   background-color: #D8D8D8;
   border: 0;
   margin: 15px;
@@ -244,8 +259,19 @@ body {
   overflow: auto;
 }
 
-.concept-entry-block-contents	{
+.concept-entry-block__contents	{
   margin: 15px;
+}
+
+.concept-entry-block__contents--empty {
+  position: absolute;
+  width: 500px;
+  top: 50%;
+  bottom: 50%;
+  right: 50%;
+  left: 50%;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 .term-block	{
@@ -253,6 +279,7 @@ body {
   float: left;
   height: 100%;
   width: 25%;
+  min-width: 206px;
   margin-top: 5px;
   padding-left: 10px;
   position: relative;
@@ -276,10 +303,10 @@ body {
 
 .term-block-list-container	{
   background-color: white;
-  height: 75%;
+  height: 80%;
   width: 90%;
   position: absolute;
-  bottom: 15px;
+  top: 115px;
   padding: 5px;
   border: 1px solid gray;
   border-radius: 3px;
