@@ -3,7 +3,6 @@ import $ from 'jquery'
 
 import TBXHeader from './TBXHeader'
 import ConceptEntry from './ConceptEntry'
-import {ErrorPopup} from '../containers/popups'
 
 class TBX {
     constructor(file, callback, self, errorCallback = null) {
@@ -201,63 +200,5 @@ class TBX {
         )
     }
 }
-
-
-
-
-
-
-
-
-
-  //
-  //
-  //
-  // constructor(dialect, style, version, schemas, header, conceptEntries, back){
-  //   this._dialect = dialect || ''
-  //   this._style = style || 'dca'
-  //   this._version = version || ''
-  //   this._schemas = schemas || []
-  //   this._header = header
-  //   this._conceptEntries = conceptEntries || []
-  //   this._back = back || null
-  // }
-  //
-  // set dialect(dialect) { this._dialect = dialect }
-  // get dialect() { return this._dialect }
-  //
-  // set style(style) { this._style = style }
-  // get style() { return this._style }
-  //
-  // set version(version) { this._version = version }
-  // get version() { return this._version }
-  //
-  // set schemas(schemas) { this._schemas = schemas }
-  // get schemas() { return this._schemas }
-  // addSchema(schema) {
-  //   this._schemas.add(schema)
-  // }
-  //
-  // set header(header) { this._header = header }
-  // get header() { return this._header }
-  //
-  // set conceptEntries(conceptEntries) { this._conceptEntries = conceptEntries }
-  // get conceptEntries() { return this._conceptEntries }
-  //
-  // addConceptEntry(conceptEntry) {
-  //   this._conceptEntries.add(conceptEntry)
-  // }
-  // getConceptEntryById(id) {
-  //   for (let conceptEntry of this._conceptEntries) {
-  //     if (conceptEntry.id === id) {
-  //       return conceptEntry
-  //     }
-  //   }
-  //
-  //   return null
-  // }
-  //
-
-// }
 
 export default TBX

@@ -170,7 +170,8 @@ body {
   font-size: 16px;
   font-weight: bold;
   border-bottom: 2px solid gray;
-  width: 350px;
+  min-width: 450px;
+  width: 30%;
 }
 .card-title__popup	{
   font-size: 32px;
@@ -285,14 +286,14 @@ body {
   position: relative;
 }
 
-.term-block-title	{
+.term-block__title	{
   font-size: 20px;
   font-weight: bold;
   border-bottom: 2px solid gray;
   width: 80%;
 }
 
-.term-block-search	{
+.term-block__search	{
   background-color: white;
   height: 24px;
   border: 1px solid gray;
@@ -301,7 +302,7 @@ body {
   border-radius: 3px;
 }
 
-.term-block-list-container	{
+.term-block__list-container	{
   background-color: white;
   height: 80%;
   width: 90%;
@@ -312,13 +313,13 @@ body {
   border-radius: 3px;
 }
 
-.term-block-list	{
+.term-block__list-container____list	{
   background-color: white;
   height: 92%;
   overflow: auto;
 }
 
-.term-block-list-line	{
+.term-block__list-line	{
   width: 60%;
   border-bottom: 1px solid #D8D8D8;
 }
@@ -345,7 +346,7 @@ body {
   border-bottom: 5px solid transparent;
 }
 
-.term-block-lang-button	{
+.term-block__lang-button	{
   background-color: #D8D8D8px;
   margin-top: 5px;
   border: 0;
@@ -353,13 +354,13 @@ body {
   height: 30px;
 }
 
-.term-block-lang-block	{
+.term-block__lang-block	{
   margin-top: 5px;
   margin-left: 5px;
   margin-bottom: 15px;
 }
 
-.term-block-list-item	{
+.term-block__list-item	{
   padding: 0;
   margin: 1px;
 }

@@ -1,28 +1,28 @@
 import React, {Component} from 'react'
 import Input from '@material-ui/core/Input'
+import $ from 'jquery'
 
 import Languages from '../data/isoLangCodesKeyed'
 
+import {LanguageFilterPopup} from '../containers/popups'
+
 class TermBlock extends Component {
-  //
-  // constructor(props) {
-  //   super(props)
-  //
-  //   this._mainWindow = props.mainWindow
-  // }
-  //
-  // get mainWindow()  { return this._mainWindow }
-  state = {
-    termsByLang: [],
-    termDict: {},
-    langDict: {},
-    highlightedTermRef: ''
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      termsByLang: {},
+      termDict: {},
+      langDict: {},
+      highlightedTermRef: ''
+    }
   }
 
   addTermsByLang(termsByLang) {
     let termDict = {}
     let langDict = {}
     let hasOwn = {}.hasOwnProperty
+
     for (let key in termsByLang) {
       if (!hasOwn.call(termsByLang, key)) { return }
       langDict[key] = {
@@ -38,11 +38,18 @@ class TermBlock extends Component {
     }
 
     this.setState({
-      'termsByLang': termsByLang,
-      'termDict': termDict,
-      'langDict': langDict
+      termsByLang: termsByLang,
+      termDict: termDict,
+      langDict: langDict,
+      languageFilterPopup:     <LanguageFilterPopup
+                                  self={this.props.self}
+                                  languages={Object.keys(termsByLang)}
+                                  action={this.handleLanguageCheckChanged}
+                                />
     })
   }
+
+
 
   handleClick(ref, termSec) {
     if (this.state.highlightedTermRef !== '') {
@@ -80,6 +87,16 @@ class TermBlock extends Component {
       }
   }
 
+  handleLanguageCheckChanged(e) {
+    $(`#term-block__lang-block--${e.target.value}`)[0].hidden = !$(`#term-block__lang-block--${e.target.value}`)[0].hidden
+  }
+
+  popup() {
+    this.props.self.popup(
+      this.state.languageFilterPopup
+    )
+  }
+
   render() {
     let termsByLang = this.state.termsByLang
 
@@ -97,10 +114,10 @@ class TermBlock extends Component {
           })
 
           langBlocks.push(
-            <div key={`l${key}`} className="term-block-lang-block">
+            <div key={`l${key}`} id={`term-block__lang-block--${key}`} className="term-block__lang-block">
               <strong onClick={e => this.collapseLangBlock(`l${key}`)}>{Languages[key]}</strong>
               <div ref={`l${key}_arrow`} className="collapse-arrow-down"/>
-              <div className="term-block-list-line"/>
+              <div className="term-block__list-line"/>
               <div ref={`l${key}`}>
               {
                 termsByLang[key].map(termSec => {
@@ -108,7 +125,7 @@ class TermBlock extends Component {
 
                     return (
                       <p
-                        className="term-block-list-item"
+                        className="term-block__list-item"
                         key={ref}
                         onClick={(e) => this.handleClick(ref, termSec)}
                         >
@@ -128,24 +145,25 @@ class TermBlock extends Component {
         <div
           className="term-block"
           >
-          <p className="term-block-title">Terms</p>
+          <p className="term-block__title">Terms</p>
           <Input
             placeholder="Search"
             type="search"
             ref="termSearch"
-            className="term-block-search"
+            className="term-block__search"
             onChange={e => this.search(e.target.value)}
            />
           <div
-            className="term-block-list-container"
+            className="term-block__list-container"
             >
             <div
-              className="term-block-list"
+              className="term-block__list-container____list"
             >
               {langBlocks}
             </div>
             <button
-              className="term-block-lang-button"
+              className="term-block__lang-button"
+              onClick={() => {this.popup()}}
             >Languages</button>
           </div>
         </div>

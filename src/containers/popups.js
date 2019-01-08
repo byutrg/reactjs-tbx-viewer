@@ -1,4 +1,9 @@
-import React from 'react'
+import React, {Component} from 'react'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import $ from 'jquery'
+
+import Languages from '../data/isoLangCodesKeyed'
 
 import Blur from '../containers/Blur'
 
@@ -68,6 +73,72 @@ export const YesNoPopup = (props) => (
     </div>
   </Blur>
 )
+
+class LanguageCheckBox extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      identifier: `language-filter__l${this.props.langKey}`,
+      visible: !$(`#term-block__lang-block--${props.langKey}`)[0].hidden
+    }
+  }
+
+  componentDidMount() {
+    console.log(this.state.visible)
+    if (this.state.visible) {
+      $(`#${this.state.identifier}`).find('input')[0].checked = true
+    }
+  }
+
+  render = () => (
+    <FormControlLabel
+      id={this.state.identifier}
+      key={this.state.identifier}
+      control={
+        <input type="checkbox"
+          onChange={this.props.action}
+          value={this.props.langKey}
+        />
+      }
+      label={Languages[this.props.langKey]}
+      />
+  )
+}
+
+
+
+export const LanguageFilterPopup = (props) => (
+  <Blur
+    self={props.self}
+    clickToClose={true}
+    >
+    <div
+      className="popup"
+      onClick={(e) => {e.stopPropagation()}}
+      >
+      <div
+        className="popup__content"
+        >
+        <p className="card-title card-title__popup">
+          Language Filter
+        </p>
+        <div
+          className="indented--double"
+          >
+          { props.languages.map(key => (
+              <LanguageCheckBox
+                langKey={key}
+                action={props.action}
+                />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </Blur>
+)
+
 
 export const SchemaPopup = (props) => (
   <Blur
