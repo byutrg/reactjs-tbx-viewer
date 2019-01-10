@@ -5,10 +5,11 @@ import TBXHeader from './TBXHeader'
 import ConceptEntry from './ConceptEntry'
 
 class TBX {
-    constructor(file, callback, self, errorCallback = null) {
+    constructor({file = null, self, callback, errorCallback} = {}) {
       this._file = file
       this._callback = callback
       this._errorCallback = errorCallback
+      this._self = self
 
       this._dialect = ''
       this._style = ''
@@ -19,29 +20,51 @@ class TBX {
       this._tbxLevel = {}
       this._conceptEntries = []
 
-      let myPromise = new Promise((resolve, reject) => {
-        var reader = new FileReader()
-        reader.onload = (e) => resolve(this._contents = reader.result)
-        reader.readAsText(this.file)
-      })
+      if (sessionStorage.getItem('TBX')) {
+        this.loadFromSession()
+      } else {
+        let myPromise = new Promise((resolve, reject) => {
+          var reader = new FileReader()
+          reader.onload = (e) => resolve(this._contents = reader.result)
+          reader.readAsText(this.file)
+        })
 
-      myPromise.then(() => {
-        this.process()
+        myPromise.then(() => {
+          this.process()
+          this.cache()
+          this.finalize()
+        })
+      }
+    }
 
-        if (this.error) {
-          errorCallback.call(self,"The uploaded file does not appear to be well-formed XML and is not parseable.")
+    loadFromSession() {
+      this._contents = sessionStorage.getItem('TBX')
+
+      this.process()
+      this.finalize()
+    }
+
+    cache() {
+      sessionStorage.setItem('TBX', this._contents)
+    }
+
+    finalize() {
+      if (this.error && this._errorCallback) {
+        this._errorCallback.call(this.self,
+          "The uploaded file does not appear to be well-formed XML and is not parseable.")
+      }
+      else {
+        if (this._callback) {
+          this._callback.call(this.self, this.getTermsByLang())
         }
-        else {
-          callback.call(self)
-        }
-      })
+      }
     }
 
     set file      (file)          { this._file = file               }
     get file      ()              { return this._file               }
 
-    set callback  (callback)      { this._callback = callback       }
-    get callback  ()              { return this._callback           }
+    set self      (self)          { this._self = self               }
+    get self      ()              { return this._self               }
 
     set contents  (contents)      { this._contents = contents       }
     get contents  ()              {  return this._contents          }
@@ -195,7 +218,9 @@ class TBX {
 
         this.conceptEntries = $tbx.find("conceptEntry, termEntry").map(
             (index, conceptEntry) => {
-                return new ConceptEntry(conceptEntry, index)
+                return new ConceptEntry({
+                  conceptEntry: conceptEntry,
+                  conceptIndex: index})
             }
         )
     }

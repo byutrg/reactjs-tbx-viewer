@@ -58,6 +58,7 @@ class LangCard extends Component {
     return (
       (this.props.langSec) ?
         <div
+          id={`lang-card_${this.props.langSec.langCode}`}
           className="lang-card"
         >
           <p className="card-title">

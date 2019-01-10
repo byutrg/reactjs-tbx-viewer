@@ -1,20 +1,40 @@
 import $ from 'jquery'
 
 class TBXLevel {
-  constructor(element, excludedLevelString = '', ownIndex = -1, parentIndex = -1) {
-    this._element = element
-    this._excludedLevelString = excludedLevelString
-    this._ownIndex = ownIndex
-    this._parentIndex = parentIndex
+  constructor({element = null, excludedLevelString = '', ownIndex = -1, parentIndex = -1} = {}) {
+    if (element) {
+      this._element = element
+      this._excludedLevelString = excludedLevelString
+      this._ownIndex = ownIndex
+      this._parentIndex = parentIndex
 
-    this._metadata = this.parseMetaData()
+      this._metadata = this.parseMetaData()
+      // this.cache()
+    }
   }
 
   get ownIndex()            { return this._ownIndex }
   get parentIndex()         { return this._parentIndex }
   get element()             { return this._element  }
-  get excludedLevelString() {return this._excludedLevelString }
+  get elementName()         { return $(this._element).prop('tagName')}
+  get elementString()       { return $(this._element).prop('outerHTML') }
+  get excludedLevelString() { return this._excludedLevelString }
   get metadata()            { return this._metadata }
+  get metadataString()      { return JSON.stringify(this._metadata) }
+
+  // loadFromSession(elementName, ownIndex, parentIndex = -1) {
+  //   let identifier = `level_${elementName}_${ownIndex}_${parentIndex}`
+  //   let itemObject = JSON.parse(sessionStorage.getItem(identifier))
+  //   this._element = itemObject.element
+  //   this._metadataString = itemObject.metadata
+  // }
+  //
+  // cache() {
+  //   let identifier = `level_${this.elementName}_${this.ownIndex}_${this.parentIndex}`
+  //   sessionStorage.setItem(`${identifier}`, JSON.stringify({
+  //     element: this.elementString,
+  //     metadata: this.metadataString}))
+  // }
 
   getDatCat(dc) {
     //check if _metadata contains the dc.  Use hasOwnProperty via call in case of a datcat named "hasOwnProperty" got put into _metadata

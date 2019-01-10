@@ -14,7 +14,10 @@ class TermSec extends TBXLevel {
   //       }
   // }
   constructor (termSec, indices = null){
-    super(termSec, '', indices.termIndex, indices.langIndex)
+    super({
+      element: termSec,
+      ownIndex: indices.termIndex,
+      parentIndex: indices.langIndex})
 
     this._conceptIndex = indices.conceptIndex
     this._langIndex = indices.langIndex

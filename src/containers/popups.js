@@ -1,16 +1,44 @@
 import React, {Component} from 'react'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import $ from 'jquery'
+
 
 import Languages from '../data/isoLangCodesKeyed'
 
-import Blur from '../containers/Blur'
+import Backdrop from '../containers/Backdrop'
+
+export const ImportantUpdatesPopup = (props) => (
+  <Backdrop
+    self={props.self}
+    >
+    <div
+      className="popup popup--yesno"
+      onClick={(e) => {e.stopPropagation()}}
+      >
+      <div
+        className="popup__content"
+        >
+        <p className="card-title card-title__popup">
+          Important Information
+        </p>
+        <p className="popup__content____message popup__content____message--large">{props.children}</p>
+        <div className="popup__content____buttonblock popup__content____buttonblock--single">
+          <button
+            variant = 'contained'
+            className = "metadata__button"
+            onClick = { props.action }
+            >
+            {props.buttonText}
+          </button>
+        </div>
+      </div>
+    </div>
+  </Backdrop>
+)
 
 export const ErrorPopup = (props) => (
-  <Blur
+  <Backdrop
     self={props.self}
-    clickToClose={true}
     >
     <div
       className="popup popup--yesno"
@@ -34,11 +62,11 @@ export const ErrorPopup = (props) => (
         </div>
       </div>
     </div>
-  </Blur>
+  </Backdrop>
 )
 
 export const YesNoPopup = (props) => (
-  <Blur
+  <Backdrop
     self={props.self}
     clickToClose={true}
     >
@@ -71,7 +99,7 @@ export const YesNoPopup = (props) => (
         </div>
       </div>
     </div>
-  </Blur>
+  </Backdrop>
 )
 
 class LanguageCheckBox extends Component {
@@ -109,7 +137,7 @@ class LanguageCheckBox extends Component {
 
 
 export const LanguageFilterPopup = (props) => (
-  <Blur
+  <Backdrop
     self={props.self}
     clickToClose={true}
     >
@@ -136,12 +164,12 @@ export const LanguageFilterPopup = (props) => (
         </div>
       </div>
     </div>
-  </Blur>
+  </Backdrop>
 )
 
 
 export const SchemaPopup = (props) => (
-  <Blur
+  <Backdrop
     self={props.self}
     clickToClose={true}
     >
@@ -158,11 +186,11 @@ export const SchemaPopup = (props) => (
         {props.children}
       </div>
     </div>
-  </Blur>
+  </Backdrop>
 )
 
 export const HeaderInfoPopup = (props) => (
-  <Blur
+  <Backdrop
     self={props.self}
     clickToClose={true}
     >
@@ -179,5 +207,5 @@ export const HeaderInfoPopup = (props) => (
         {props.children}
       </div>
     </div>
-  </Blur>
+  </Backdrop>
 )

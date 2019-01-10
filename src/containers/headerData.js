@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { toast } from 'react-toastify'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -20,12 +22,28 @@ export const HeaderData = (props) => (
 )
 
 class SchemaContent extends Component {
+  handleCopy = (text) => {
+    if (!toast.isActive(text)) {
+      toast.info("Schema location copied to clipboard...", {
+        toastId: text,
+        autoClose: 2000
+       })
+    }
+  }
+
   render = () => (
     this.props.self.state.TBX.schemas.length > 0 ?
     <List component='ul'>
       { this.props.self.state.TBX.schemas.map((x,index) => (
         <ListItem key={"schema_"+index}>
-          <ListItemText>{x}</ListItemText>
+          <CopyToClipboard
+            text={x}
+            onCopy={this.handleCopy}
+            >
+            <ListItemText
+              className="metadata-item__blink"
+              >{x}</ListItemText>
+          </CopyToClipboard>
         </ListItem>
         ))
       }
@@ -79,6 +97,7 @@ class YesNoContent extends Component {
       yes="Yes"
       no="No"
       action={ () => {
+        sessionStorage.clear()
         let reload = window.location.reload
         reload.apply(window.location)
       } }
