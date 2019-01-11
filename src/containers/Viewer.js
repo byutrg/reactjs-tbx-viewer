@@ -6,7 +6,7 @@ import Header from "../containers/Header"
 // import MainWindow from '../containers/MainWindow'
 import TermBlock from '../containers/TermBlock'
 import FileUploader from '../containers/FileUploader'
-import { ErrorPopup } from '../containers/popups'
+import { GeneralPopup, ErrorPopup } from '../containers/popups'
 
 import TBX from '../classes/TBX'
 
@@ -35,7 +35,24 @@ class Viewer extends Component {
     }
   }
 
-  loadPage(termsByLang = []) {
+  displayPrivacyPolicy = (e) => {
+    e.preventDefault()
+    this.popup(
+      <GeneralPopup
+        self={this}
+        title="Privacy Policy"
+        buttonText="OK"
+        clickToClose={true}
+        action={this.popup()}
+        >
+        The TBX Viewer runs entirely locally in your browser. As a result,
+        LTAC Global does not store any information uploaded to the TBX Viewer.
+        No terminology data or usage data is ever sent to the server.
+      </GeneralPopup>
+    )
+  }
+
+  loadPage = (termsByLang = []) => {
     this.refs.termBlock.addTermsByLang(termsByLang)
     this.forceUpdate()
     toast.dismiss()
@@ -48,6 +65,18 @@ class Viewer extends Component {
         callback={this.loadFile}
         />
     )
+  }
+
+  blur = () => {
+    let classes = this.refs.contentWindow.className.split(" ")
+    classes.push('blur')
+    this.refs.contentWindow.className = classes.join(" ")
+  }
+
+  clearBlur = () => {
+    let classes = this.refs.contentWindow.className.split(" ")
+    this.refs.contentWindow.className = classes.map(x => (x !== "blur") ? x : '')
+                                              .join(" ")
   }
 
   error(content = "", buttonText = "OK") {
@@ -68,6 +97,12 @@ class Viewer extends Component {
   }
 
   popup(content = "") {
+    if (content) {
+      this.blur()
+    } else {
+      this.clearBlur()
+    }
+
     this.setState({
       popup: content
     })
@@ -108,6 +143,19 @@ class Viewer extends Component {
             ref="termBlock"
           />
           <ConceptEntryBlock self={this} ref="conceptEntryBlock"/>
+          <div
+            className="footer">
+            <span
+              className="copyright">
+              Copyright © 2019. LTAC Global. All rights reserved.
+            </span>
+            <span className="privacy-policy">
+              <a
+                onClick={this.displayPrivacyPolicy}
+                href="./"
+                >Privacy Policy</a>
+            </span>
+          </div>
         </div>
         <ToastContainer
           className="toast"

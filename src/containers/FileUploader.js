@@ -32,6 +32,9 @@ class FileUploader extends Component {
     <Backdrop
       ref="backdrop"
       self={this.props.self}>
+      <div
+        className="file-uploader"
+        >
         <UploadHeader/>
         <input
             type="file"
@@ -49,7 +52,7 @@ class FileUploader extends Component {
               Select TBX File to Upload
             </Button>
         </label>
-
+      </div>
     </Backdrop>
   )
 }

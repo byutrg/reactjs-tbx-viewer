@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import $ from 'jquery'
 
 
@@ -12,7 +12,7 @@ export const ImportantUpdatesPopup = (props) => (
     self={props.self}
     >
     <div
-      className="popup popup--yesno"
+      className="popup popup--buttons"
       onClick={(e) => {e.stopPropagation()}}
       >
       <div
@@ -41,7 +41,7 @@ export const ErrorPopup = (props) => (
     self={props.self}
     >
     <div
-      className="popup popup--yesno"
+      className="popup popup--buttons"
       onClick={(e) => {e.stopPropagation()}}
       >
       <div
@@ -65,13 +65,45 @@ export const ErrorPopup = (props) => (
   </Backdrop>
 )
 
+export const GeneralPopup = (props) => (
+  <Backdrop
+    self={props.self}
+    clickToClose={props.clickToClose}
+    >
+    <div
+      className="popup popup--buttons"
+      onClick={(e) => {e.stopPropagation()}}
+      >
+      <div
+        className="popup__content"
+        >
+        <p className="card-title card-title__popup">
+          {props.title}
+        </p>
+        <p className="popup__content____message popup__content____message--large">
+          {props.children}
+        </p>
+        <div className="popup__content____buttonblock popup__content____buttonblock--single">
+          <button
+            variant = 'contained'
+            className = "metadata__button"
+            onClick = { props.action }
+            >
+            {props.buttonText}
+          </button>
+        </div>
+      </div>
+    </div>
+  </Backdrop>
+)
+
 export const YesNoPopup = (props) => (
   <Backdrop
     self={props.self}
     clickToClose={true}
     >
     <div
-      className="popup popup--yesno"
+      className="popup popup--buttons"
       onClick={(e) => {e.stopPropagation()}}
       >
       <div
@@ -113,24 +145,30 @@ class LanguageCheckBox extends Component {
   }
 
   componentDidMount() {
-    console.log(this.state.visible)
     if (this.state.visible) {
-      $(`#${this.state.identifier}`).find('input')[0].checked = true
+      this.refs.input.checked= true
+      // $(`#${this.state.identifier}_label`).find('input')[0].checked = true
     }
   }
 
   render = () => (
-    <FormControlLabel
+    <div
       id={this.state.identifier}
-      key={this.state.identifier}
-      control={
+      className="language-checkbox">
+      <label
+        id={`${this.state.identifier}_label`}
+        key={this.state.identifier}
+        className="language-checkbox__label"
+        >
         <input type="checkbox"
+          ref="input"
+          htmlFor={`${this.state.identifier}_label`}
           onChange={this.props.action}
           value={this.props.langKey}
         />
-      }
-      label={Languages[this.props.langKey]}
-      />
+        <span className="language-checkbox__label____content" >{Languages[this.props.langKey]}</span>
+      </label>
+    </div>
   )
 }
 
@@ -156,6 +194,7 @@ export const LanguageFilterPopup = (props) => (
           >
           { props.languages.map(key => (
               <LanguageCheckBox
+                key={`languageCheckBox_${key}`}
                 langKey={key}
                 action={props.action}
                 />
