@@ -87,7 +87,7 @@ export const GeneralPopup = (props) => (
           <button
             variant = 'contained'
             className = "metadata__button"
-            onClick = { props.action }
+            onClick = { (e)=>(props.action.call(props.self)) }
             >
             {props.buttonText}
           </button>
@@ -117,14 +117,14 @@ export const YesNoPopup = (props) => (
           <button
             variant = 'contained'
             className = "metadata__button"
-            onClick = { props.action }
+            onClick = { (e)=> props.yesAction.call(props.self) }
             >
             {props.yes}
           </button>
           <button
             variant = 'contained'
             className = "metadata__button"
-            onClick = { ()=> props.self.popup() }
+            onClick = { (e)=> props.noAction.call(props.self) }
             >
               {props.no}
           </button>

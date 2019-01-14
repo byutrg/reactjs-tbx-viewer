@@ -15,6 +15,7 @@ class Viewer extends Component {
     super(props)
 
     this.state = {
+      appVersion: "0.1-beta",
       conceptEntry: null,
       popup: ''
     }
@@ -43,7 +44,7 @@ class Viewer extends Component {
         title="Privacy Policy"
         buttonText="OK"
         clickToClose={true}
-        action={this.popup()}
+        action={this.popup}
         >
         The TBX Viewer runs entirely locally in your browser. As a result,
         LTAC Global does not store any information uploaded to the TBX Viewer.
@@ -96,7 +97,7 @@ class Viewer extends Component {
     )
   }
 
-  popup(content = "") {
+  popup(content = null) {
     if (content) {
       this.blur()
     } else {
@@ -154,6 +155,9 @@ class Viewer extends Component {
                 onClick={this.displayPrivacyPolicy}
                 href="./"
                 >Privacy Policy</a>
+            </span>
+            <span className="app-version">
+              TBX Viewer: v{this.state.appVersion}
             </span>
           </div>
         </div>

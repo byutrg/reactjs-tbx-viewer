@@ -39,6 +39,10 @@ body {
   margin-left: 25px;
 }
 
+.app-version {
+  float: right;
+}
+
 .blur {
   filter: blur(1px);
   -webkit-filter: blur(1px);

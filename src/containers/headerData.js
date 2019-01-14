@@ -96,11 +96,12 @@ class YesNoContent extends Component {
       self={this.props.self}
       yes="Yes"
       no="No"
-      action={ () => {
+      yesAction={ () => {
         sessionStorage.clear()
         let reload = window.location.reload
         reload.apply(window.location)
       } }
+      noAction={ this.props.self.popup }
       >
       Are you sure you want to close this file and open a new one?
     </YesNoPopup>
