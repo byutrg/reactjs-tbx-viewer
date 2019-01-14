@@ -145,28 +145,47 @@ class LanguageCheckBox extends Component {
   }
 
   componentDidMount() {
+    this.toggleChecked()
+  }
+
+  toggleChecked = () => {
+    let classes = this.refs.checkbox.className.split(" ")
     if (this.state.visible) {
-      this.refs.input.checked= true
-      // $(`#${this.state.identifier}_label`).find('input')[0].checked = true
+      classes.push('checkbox--checked')
+      this.refs.checkbox.className = classes.join(" ")
+    } else {
+      this.refs.checkbox.className = classes.map(x => (x !== "checkbox--checked") ? x : null)
+                                                .join("")
     }
+
+    this.setState({
+      visible: !this.state.visible
+    })
+  }
+
+  handleClick = (e) => {
+    this.props.action(this.props.langKey, this.state.visible)
+
+    this.toggleChecked()
   }
 
   render = () => (
     <div
       id={this.state.identifier}
-      className="language-checkbox">
+      className="language-checkbox"
+      onClick={this.handleClick}
+      >
       <label
         id={`${this.state.identifier}_label`}
         key={this.state.identifier}
         className="language-checkbox__label"
         >
-        <input type="checkbox"
-          ref="input"
-          htmlFor={`${this.state.identifier}_label`}
-          onChange={this.props.action}
-          value={this.props.langKey}
-        />
-        <span className="language-checkbox__label____content" >{Languages[this.props.langKey]}</span>
+
+      <span ref="checkbox" className="checkbox">
+        <span className="check"></span>
+      </span>
+        <span className="language-checkbox__label____content"
+          >{Languages[this.props.langKey]}</span>
       </label>
     </div>
   )

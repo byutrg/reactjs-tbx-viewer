@@ -76,7 +76,7 @@ class Viewer extends Component {
 
   clearBlur = () => {
     let classes = this.refs.contentWindow.className.split(" ")
-    this.refs.contentWindow.className = classes.map(x => (x !== "blur") ? x : '')
+    this.refs.contentWindow.className = classes.map(x => (x !== "blur") ? x : null)
                                               .join(" ")
   }
 

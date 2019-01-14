@@ -87,11 +87,15 @@ class TermBlock extends Component {
       }
   }
 
-  handleLanguageCheckChanged(e) {
-    $(`#term-block__lang-block--${e.target.value}`)[0].hidden = !$(`#term-block__lang-block--${e.target.value}`)[0].hidden
+  handleLanguageCheckChanged(value, isVisible = null) {
+    if (isVisible === null) {
+      isVisible = $(`#term-block__lang-block--${value}`)[0].hidden
+    }
 
-    if ($(`#lang-card_${e.target.value}`)[0]) {
-      $(`#lang-card_${e.target.value}`)[0].hidden = !$(`#lang-card_${e.target.value}`)[0].hidden
+    $(`#term-block__lang-block--${value}`)[0].hidden = !isVisible
+
+    if ($(`#lang-card_${value}`)[0]) {
+      $(`#lang-card_${value}`)[0].hidden = !isVisible
     }
   }
 

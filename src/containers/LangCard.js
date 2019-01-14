@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import $ from 'jquery'
 
 import Languages from '../data/isoLangCodesKeyed'
 import Regions from '../data/regionCodesKeyed'
@@ -54,10 +55,17 @@ class LangCard extends Component {
     return (<div>{content}</div>)
   }
 
+  componentDidMount = () => {
+    let isVisible = $(`#term-block__lang-block--${this.props.langSec.langCode}`)[0].hidden
+
+    this.refs.langCard.hidden = isVisible
+  }
+
   render() {
     return (
       (this.props.langSec) ?
         <div
+          ref="langCard"
           id={`lang-card_${this.props.langSec.langCode}`}
           className="lang-card"
         >
