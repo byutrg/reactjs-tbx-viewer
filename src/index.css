@@ -32,6 +32,8 @@ body {
 
 .footer {
   margin: 10px;
+  float: left;
+  width: 99%;
 }
 
 .privacy-policy {
