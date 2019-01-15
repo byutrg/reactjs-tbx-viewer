@@ -99,7 +99,12 @@ class YesNoContent extends Component {
       yesAction={ () => {
         sessionStorage.clear()
         let reload = window.location.reload
-        reload.apply(window.location)
+        try {
+          reload.apply(window.location)
+        } catch (e) {
+          window.location.reload()
+        }
+
       } }
       noAction={ this.props.self.popup }
       >

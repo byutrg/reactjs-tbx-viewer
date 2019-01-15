@@ -74,7 +74,77 @@ body {
   bottom: 100px;
   width: 600px;
   height: 50%;
+  min-height:350px;
   background-color: #EAE2D6;
+}
+
+@media only screen and (max-height: 710px) {
+  .popup {
+    align-self: flex-end;
+
+  }
+}
+
+@media only screen and (max-height: 490px) {
+  .popup {
+    position: absolute;
+    top: 15%;
+    height: 30%;
+    min-height:350px;
+  }
+
+  .popup__content	{
+    width: 82% !important;
+    height: 82% !important;
+  }
+
+  .card-title__popup {
+    min-width: 0 !important;
+    font-size: 20px !important;
+    width: 90% !important;
+  }
+}
+
+@media only screen and (max-height: 430px) {
+  .popup {
+    position: absolute;
+    top: 15%;
+    height: 10% !important;
+    min-height:250px;
+  }
+}
+
+@media only screen and (max-height: 325px) {
+  .popup {
+    position: absolute;
+    top: 15%;
+    height: 10% !important;
+    min-height:150px;
+  }
+  .popup_content {
+    overflow-y: scroll !important;
+  }
+
+  .checkbox {
+    height: 10px !important;
+    width: 10px !important;
+  }
+
+  .language-checkbox {
+    padding: 2px !important;
+  }
+
+  .checkbox--checked .check {
+    left: 3px !important;
+    top: 1px !important;
+    height: 6px !important;
+    width: 3px !important;
+    border-width: 0 1px 1px 0 !important;
+  }
+
+  .language-checkbox__label____content {
+    font-size: 1em !important;
+  }
 }
 
 .popup--buttons	{
