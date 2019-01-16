@@ -148,7 +148,7 @@ class Viewer extends Component {
             className="footer">
             <span
               className="copyright">
-              Copyright © 2019. LTAC Global. All rights reserved.
+              Copyright © 2019. LTAC Global / BYU TRG. All rights reserved.
             </span>
             <span className="privacy-policy">
               <a
