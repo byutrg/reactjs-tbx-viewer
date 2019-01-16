@@ -207,15 +207,15 @@ body {
 
 .checkbox--checked .check {
   display: block;
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 .language-checkbox__label {
@@ -557,6 +557,54 @@ body {
   padding-left: 5px;
   padding-bottom: 8px;
   border-radius: 3px;
+}
+
+.term-block__top-buttons {
+  height: 36px;
+  width: 36px;
+  padding: 0;
+  font-size: .95em;
+}
+
+.term-block__top-buttons span {
+  display: block;
+  background-color: transparent;
+  position: relative;
+  height: 50%;
+  width: 50%;
+  margin: 0 auto;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+}
+
+@media only screen and (max-width: 1850px) {
+  .term-block__top-buttons {
+    font-size: .7em;
+  }
+}
+
+.term-block__collapse-button {
+  float: right;
+  margin-right: 15px;
+}
+
+.term-block__collapse-button span {
+  left: 4px;
+  -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+.term-block__uncollapse-button {
+  float: right;
+  margin-right: 25px;
+}
+
+.term-block__uncollapse-button  span{
+  bottom: 5px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 .term-block__list-container	{

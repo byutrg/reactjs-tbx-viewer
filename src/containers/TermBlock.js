@@ -39,6 +39,7 @@ class TermBlock extends Component {
 
     this.setState({
       termsByLang: termsByLang,
+      langRefs: Object.keys(termsByLang).map(key => `l${key}`),
       termDict: termDict,
       langDict: langDict,
       languageFilterPopup:     <LanguageFilterPopup
@@ -73,18 +74,27 @@ class TermBlock extends Component {
 
   collapseLangBlock(langRef) {
     if (this.refs[langRef].style.display === 'none') {
-        this.refs[langRef].style.display = 'block'
-        this.refs[langRef+'_arrow'].style.borderTop = '5px solid #D8D8D8'
-        this.refs[langRef+'_arrow'].style.borderRight = '5px solid transparent'
-        this.refs[langRef+'_arrow'].style.borderLeft = '5px solid transparent'
-        this.refs[langRef+'_arrow'].style.borderBottom = ''
+        this.uncollapse(langRef)
       } else {
-        this.refs[langRef].style.display = 'none'
-        this.refs[langRef+'_arrow'].style.borderTop = '5px solid transparent'
-        this.refs[langRef+'_arrow'].style.borderRight = '5px solid #D8D8D8'
-        this.refs[langRef+'_arrow'].style.borderLeft = ''
-        this.refs[langRef+'_arrow'].style.borderBottom = '5px solid transparent'
+        this.collapse(langRef)
       }
+  }
+
+  collapse(langRef) {
+    console.log(langRef)
+    this.refs[langRef].style.display = 'none'
+    this.refs[langRef+'_arrow'].style.borderTop = '5px solid transparent'
+    this.refs[langRef+'_arrow'].style.borderRight = '5px solid #D8D8D8'
+    this.refs[langRef+'_arrow'].style.borderLeft = ''
+    this.refs[langRef+'_arrow'].style.borderBottom = '5px solid transparent'
+  }
+
+  uncollapse(langRef) {
+    this.refs[langRef].style.display = 'block'
+    this.refs[langRef+'_arrow'].style.borderTop = '5px solid #D8D8D8'
+    this.refs[langRef+'_arrow'].style.borderRight = '5px solid transparent'
+    this.refs[langRef+'_arrow'].style.borderLeft = '5px solid transparent'
+    this.refs[langRef+'_arrow'].style.borderBottom = ''
   }
 
   handleLanguageCheckChanged(value, isVisible = null) {
@@ -97,6 +107,15 @@ class TermBlock extends Component {
     if ($(`#lang-card_${value}`)[0]) {
       $(`#lang-card_${value}`)[0].hidden = !isVisible
     }
+  }
+
+  handleCollapseButtonClicked() {
+    this.state.langRefs.forEach(langRef => this.collapse(langRef))
+
+  }
+
+  handleUncollapseButtonClicked() {
+    this.state.langRefs.forEach(langRef => this.uncollapse(langRef))
   }
 
   popup() {
@@ -163,6 +182,21 @@ class TermBlock extends Component {
             className="term-block__search"
             onChange={e => this.search(e.target.value)}
            />
+          <button
+            ref="collapseButton"
+            className="term-block__top-buttons term-block__uncollapse-button"
+            onClick={(e) => this.handleUncollapseButtonClicked.call(this)}
+            >
+            <span></span>
+          </button>
+          <button
+            ref="collapseButton"
+            className="term-block__top-buttons term-block__collapse-button"
+            onClick={(e) => this.handleCollapseButtonClicked.call(this)}
+            >
+            <span></span>
+          </button>
+
           <div
             className="term-block__list-container"
             >
