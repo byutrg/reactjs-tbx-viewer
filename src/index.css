@@ -621,3 +621,7 @@ body {
   padding: 0;
   margin: 1px;
 }
+
+.term-block__list-item:hover	{
+  cursor: pointer;
+}
