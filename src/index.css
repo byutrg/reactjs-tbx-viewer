@@ -566,6 +566,18 @@ body {
   font-size: .95em;
 }
 
+@media only screen and (max-width: 1300px) {
+  .term-block__list-container {
+    height: 72% !important;
+    top: 165px !important;
+
+  }
+
+  .term-block__top-buttons {
+    margin: 5px;
+  }
+}
+
 .term-block__top-buttons span {
   display: block;
   background-color: transparent;
@@ -575,12 +587,6 @@ body {
   margin: 0 auto;
   border: solid black;
   border-width: 0 3px 3px 0;
-}
-
-@media only screen and (max-width: 1850px) {
-  .term-block__top-buttons {
-    font-size: .7em;
-  }
 }
 
 .term-block__collapse-button {
