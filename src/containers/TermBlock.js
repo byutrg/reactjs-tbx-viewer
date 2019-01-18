@@ -83,18 +83,14 @@ class TermBlock extends Component {
   collapse(langRef) {
     console.log(langRef)
     this.refs[langRef].style.display = 'none'
-    this.refs[langRef+'_arrow'].style.borderTop = '5px solid transparent'
-    this.refs[langRef+'_arrow'].style.borderRight = '5px solid #D8D8D8'
-    this.refs[langRef+'_arrow'].style.borderLeft = ''
-    this.refs[langRef+'_arrow'].style.borderBottom = '5px solid transparent'
+    this.refs[langRef+'_arrow'].className = this.refs[langRef+'_arrow'].className
+      .replace('collapse-arrow-down', 'collapse-arrow-left')
   }
 
   uncollapse(langRef) {
     this.refs[langRef].style.display = 'block'
-    this.refs[langRef+'_arrow'].style.borderTop = '5px solid #D8D8D8'
-    this.refs[langRef+'_arrow'].style.borderRight = '5px solid transparent'
-    this.refs[langRef+'_arrow'].style.borderLeft = '5px solid transparent'
-    this.refs[langRef+'_arrow'].style.borderBottom = ''
+    this.refs[langRef+'_arrow'].className = this.refs[langRef+'_arrow'].className
+      .replace('collapse-arrow-left', 'collapse-arrow-down')
   }
 
   handleLanguageCheckChanged(value, isVisible = null) {
@@ -144,8 +140,10 @@ class TermBlock extends Component {
 
           langBlocks.push(
             <div key={`l${key}`} id={`term-block__lang-block--${key}`} className="term-block__lang-block">
-              <strong onClick={e => this.collapseLangBlock(`l${key}`)}>{Languages[key]}</strong>
-              <div ref={`l${key}_arrow`} className="collapse-arrow-down"/>
+              <div className="term-block__lang-block____name" onClick={e => this.collapseLangBlock(`l${key}`)}>
+                <strong>{Languages[key]}</strong>
+                <div ref={`l${key}_arrow`} className="collapse-arrow-down"/>
+              </div>
               <div className="term-block__list-line"/>
               <div ref={`l${key}`}>
               {
