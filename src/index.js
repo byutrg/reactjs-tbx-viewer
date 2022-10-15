@@ -1,10 +1,9 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import * as ReactDOM from 'react-dom/client'
 import Router from './routes'
 
 import './index.css'
 import 'react-toastify/dist/ReactToastify.css'
 
-ReactDOM.render(
-  <Router/>,
-  document.getElementById('root'))
+ReactDOM.createRoot(document.getElementById('root'))
+  .render(<Router/>)

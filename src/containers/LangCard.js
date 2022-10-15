@@ -5,11 +5,15 @@ import Languages from '../data/isoLangCodesKeyed'
 import Regions from '../data/regionCodesKeyed'
 
 class LangCard extends Component {
+  constructor(props) {
+    super(props)
+    this.refs = React.createRef();
+  }
+
   loadLangContent() {
     let hasOwn = {}.hasOwnProperty
     let content = []
     let langSec = this.props.langSec
-
     for (let key in langSec.metadata) {
       if (!hasOwn.call(langSec.metadata, key)) { return }
       let value = langSec.metadata[key]
@@ -20,7 +24,7 @@ class LangCard extends Component {
           >
         <strong className="metadata-item__key">{key}</strong>
         <p className="metadata-item__value indented">
-          {(value.content.includes('http')) ? <a target="_blank" href={value.content}>{value.content}</a> : value.content}
+          {(value.content.includes('http')) ? <a target="_blank" rel="noopener noreferrer" href={value.content}>{value.content}</a> : value.content}
         </p>
         </div>
       )
@@ -43,7 +47,7 @@ class LangCard extends Component {
             >
           <strong className="metadata-item__key">{key}</strong>
           <span className="metadata-item__value indented">
-            {(value.content.includes('http')) ? <a target="_blank" href={value.content}>{value.content}</a> : value.content}
+            {(value.content.includes('http')) ? <a target="_blank" rel="noopener noreferrer" href={value.content}>{value.content}</a> : value.content}
           </span>
           </div>
         )
@@ -56,7 +60,7 @@ class LangCard extends Component {
   }
 
   componentDidMount = () => {
-    let isVisible = $(`#term-block__lang-block--${this.props.langSec.langCode}`)[0].hidden
+    let isVisible = $(`#term-block__lang-block--${this.props.langSec.xmlLang}`).hidden
 
     this.refs.langCard.hidden = isVisible
   }

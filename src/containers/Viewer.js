@@ -13,7 +13,7 @@ import TBX from '../classes/TBX'
 class Viewer extends Component {
   constructor(props) {
     super(props)
-
+    this.refs = React.createRef()
     this.state = {
       appVersion: "0.1-beta",
       conceptEntry: null,

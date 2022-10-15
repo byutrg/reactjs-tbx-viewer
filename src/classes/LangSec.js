@@ -25,7 +25,7 @@ class LangSec extends TBXLevel {
 
       this._langCode = code.toLowerCase()
       this._regionCode = region.toLowerCase()
-      this._xmlLang = $(langSec).attr('xml:lang') || ''
+      this._xmlLang = ($(langSec).attr('xml:lang') || '').toLowerCase()
       this._termSecs = $(langSec).find('termSec, tig, ntig').map((index, termSec) => {
         return new TermSec(termSec, { termIndex: index, langIndex: indices.langIndex, conceptIndex: indices.conceptIndex})
       })
@@ -79,6 +79,9 @@ class LangSec extends TBXLevel {
       }
     }
     return null
+  }
+  getLangCodeAndPossiblyRegion() {
+    return [this.langCode, this.regionCode].join('-')
   }
 }
 

@@ -46,7 +46,7 @@ class ConceptEntryBlock extends Component {
                 <div className="metadata-item__value indented">
                   {
                     (value.attributes[attName].includes("http")) ?
-                      <a target="_blank" href={value.attributes[attName]}>{value.attributes[attName]}</a> :
+                      <a target="_blank" rel="noopener noreferrer" href={value.attributes[attName]}>{value.attributes[attName]}</a> :
                       <span>{value.attributes[attName]}</span>
                   }
                 </div>
@@ -68,7 +68,7 @@ class ConceptEntryBlock extends Component {
 
       let langCards = conceptEntry.langSecs.get().map(langSec => (
         <LangCard
-          key={`langCard-${langSec.langCode}`}
+          key={`langCard-${langSec.langCode}-${langSec.regionCode}`}
           self= {this.props.self}
           langSec= {langSec}
           />

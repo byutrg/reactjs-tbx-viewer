@@ -3,13 +3,14 @@ import Input from '@material-ui/core/Input'
 import $ from 'jquery'
 
 import Languages from '../data/isoLangCodesKeyed'
+import Regions from '../data/regionCodesKeyed'
 
 import {LanguageFilterPopup} from '../containers/popups'
 
 class TermBlock extends Component {
   constructor(props) {
     super(props)
-
+    this.refs = React.createRef()
     this.state = {
       termsByLang: {},
       termDict: {},
@@ -128,7 +129,8 @@ class TermBlock extends Component {
     let langBlocks = []
 
     for (let key in termsByLang) {
-        if (hasOwn.call(termsByLang, key)) {
+      let [langCode, regCode] = key.split('-');  
+      if (hasOwn.call(termsByLang, key)) {
           termsByLang[key].sort((termSecA, termSecB) => {
             let a = termSecA.term.toLowerCase()
             let b = termSecB.term.toLowerCase()
@@ -141,7 +143,7 @@ class TermBlock extends Component {
           langBlocks.push(
             <div key={`l${key}`} id={`term-block__lang-block--${key}`} className="term-block__lang-block">
               <div className="term-block__lang-block____name" onClick={e => this.collapseLangBlock(`l${key}`)}>
-                <strong>{Languages[key]}</strong>
+                <strong>{Languages[langCode]}{regCode && '-' + Regions[regCode]}</strong>
                 <div ref={`l${key}_arrow`} className="collapse-arrow-down"/>
               </div>
               <div className="term-block__list-line"/>

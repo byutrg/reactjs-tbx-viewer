@@ -104,10 +104,10 @@ class TBX {
       let langSecs = this.getLangSecs()
       let termsByLang = {}
       langSecs.forEach(langSec => {
-        termsByLang[langSec.langCode] = termsByLang[langSec.langCode] || []
+        termsByLang[langSec.getLangCodeAndPossiblyRegion()] = termsByLang[langSec.getLangCodeAndPossiblyRegion()] || []
 
         let push = [].push
-        push.apply(termsByLang[langSec.langCode], langSec.termSecs.get())
+        push.apply(termsByLang[langSec.getLangCodeAndPossiblyRegion()], langSec.termSecs.get())
       })
 
       return termsByLang

@@ -4,6 +4,7 @@ import $ from 'jquery'
 
 
 import Languages from '../data/isoLangCodesKeyed'
+import Regions from '../data/regionCodesKeyed.json'
 
 import Backdrop from '../containers/Backdrop'
 
@@ -137,10 +138,10 @@ export const YesNoPopup = (props) => (
 class LanguageCheckBox extends Component {
   constructor(props) {
     super(props)
-
+    this.refs = React.createRef()
     this.state = {
-      identifier: `language-filter__l${this.props.langKey}`,
-      visible: !$(`#term-block__lang-block--${props.langKey}`)[0].hidden
+      identifier: `language-filter__l${props.rawKey}}`,
+      visible: !$(`#term-block__lang-block--${props.rawKey}`).hidden
     }
   }
 
@@ -164,7 +165,7 @@ class LanguageCheckBox extends Component {
   }
 
   handleClick = (e) => {
-    this.props.action(this.props.langKey, this.state.visible)
+    this.props.action(this.props.rawKey, this.state.visible)
 
     this.toggleChecked()
   }
@@ -185,7 +186,9 @@ class LanguageCheckBox extends Component {
         <span className="check"></span>
       </span>
         <span className="language-checkbox__label____content"
-          >{Languages[this.props.langKey]}</span>
+          >{Languages[this.props.langKey]}
+          {this.props.regionKey && " - " + Regions[this.props.regionKey]}
+          </span>
       </label>
     </div>
   )
@@ -209,15 +212,25 @@ export const LanguageFilterPopup = (props) => (
           Language Filter
         </p>
         <div
-          className="indented--double"
+          className="popup__content__checkboxContainer x-small"
           >
-          { props.languages.map(key => (
-              <LanguageCheckBox
-                key={`languageCheckBox_${key}`}
-                langKey={key}
-                action={props.action}
-                />
-            ))
+          { props.languages.sort((a, b) => {
+                let [langA, regionA] = a.split('-')
+                let [langB, regionB] = b.split('-')
+                let fullA = Languages[langA] + Regions[regionA]
+                let fullB = Languages[langB] + Regions[regionB]
+                return (fullA === fullB) ? 0 : 
+                  (fullA < fullB) ? -1 : 1
+              })
+              .map(key => {
+                let [lang, region] = key.split('-')
+                return (<LanguageCheckBox
+                  key={`languageCheckBox_${key}`}
+                  rawKey={key}
+                  langKey={lang}
+                  regionKey={region}
+                  action={props.action}
+                  />)})
           }
         </div>
       </div>
