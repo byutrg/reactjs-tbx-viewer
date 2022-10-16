@@ -37,6 +37,7 @@ class UploadHeader extends Component {
         <p
             className="upload-header__p"
             >Viewer</p>
+        <span className="upload-header__span"/>
       </div>
     )
   }

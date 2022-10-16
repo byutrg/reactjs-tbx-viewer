@@ -10,15 +10,34 @@ import { GeneralPopup, ErrorPopup } from '../containers/popups'
 
 import TBX from '../classes/TBX'
 
+import configData from '../config'
+
 class Viewer extends Component {
   constructor(props) {
     super(props)
+    this.loadConfig()
     this.refs = React.createRef()
     this.state = {
       appVersion: "0.1-beta",
       conceptEntry: null,
       popup: ''
     }
+  }
+
+  loadConfig() {
+    var r = document.querySelector(":root");
+    r.style.setProperty('--checkbox-color', configData.backgroundColors.checkboxColor)
+    r.style.setProperty('--checkbox--checked-color', configData.backgroundColors.checkboxCheckedColor)
+    r.style.setProperty('--concept-entry-block-color', configData.backgroundColors.conceptEntryBlockColor)
+    r.style.setProperty('--header-color', configData.backgroundColors.headerColor)
+    r.style.setProperty('--metadata__button-color', configData.backgroundColors.metadataButtonColor)
+    r.style.setProperty('--metadata-term__blink__active-color', configData.backgroundColors.metadataTermBlinkActiveColor)
+    r.style.setProperty('--popup-color', configData.backgroundColors.popupColor)
+    r.style.setProperty('--term-block-color', configData.backgroundColors.termBlockColor)
+    r.style.setProperty('--term-block__lang-button-color', configData.backgroundColors.termBlockLangButtonColor)
+   
+    r.style.setProperty("--font-family", configData.font.fontFamily)
+
   }
 
   componentDidMount() {

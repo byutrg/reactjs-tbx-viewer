@@ -9,13 +9,12 @@
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
-    "react-scripts": "2.1.5",
+    "react-scripts": "5.0.1",
     "react-toastify": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:cordova": "react-scripts build && robocopy .\\build ..\\www /MIR",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },

@@ -84,6 +84,7 @@ class ConceptEntryBlock extends Component {
                   {content || "<p>No concept entry data to display.</p>"}
                 </div>
                 {langCards}
+                <br />
               </div>
         })
   }

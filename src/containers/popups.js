@@ -135,13 +135,46 @@ export const YesNoPopup = (props) => (
   </Backdrop>
 )
 
-class LanguageCheckBox extends Component {
+class MassCheckBox extends Component {
   constructor(props) {
     super(props)
     this.refs = React.createRef()
+
     this.state = {
-      identifier: `language-filter__l${props.rawKey}}`,
-      visible: !$(`#term-block__lang-block--${props.rawKey}`).hidden
+      identifier: `language-filter__${props.checkBoxId}`
+    }
+  }
+
+  render = () => (
+    <div
+      id={this.state.identifier}
+      className="language-checkbox"
+      onClick={() => this.props.handleClick.call(this.props.parent)}
+      >
+      <label
+        id={`${this.state.identifier}_label`}
+        key={this.state.identifier}
+        className="language-checkbox__label"
+        >
+
+      <span ref="checkbox" className={`checkbox ${this.props.id === "checkAll" && "checkbox--checked"}`}>
+        <span className="check"></span>
+      </span>
+        <span className="language-checkbox__label____content"
+          >{this.props.children}</span>
+      </label>
+    </div>
+  )
+}
+
+class LanguageCheckBox extends Component {
+  constructor(props) {
+    super(props)
+
+    props.registrationHandler.call(props.parent, this)
+    this.refs = React.createRef()
+    this.state = {
+      identifier: `language-filter__l${props.rawKey}`
     }
   }
 
@@ -150,23 +183,24 @@ class LanguageCheckBox extends Component {
   }
 
   toggleChecked = () => {
-    let classes = this.refs.checkbox.className.split(" ")
-    if (this.state.visible) {
-      classes.push('checkbox--checked')
-      this.refs.checkbox.className = classes.join(" ")
-    } else {
-      this.refs.checkbox.className = classes.map(x => (x !== "checkbox--checked") ? x : null)
-                                                .join("")
-    }
-
-    this.setState({
-      visible: !this.state.visible
-    })
+    // this.state.checked = !this.state.checked
+    this.props.termBlockRef.hidden ?
+      this.refs.checkbox.classList.remove("checkbox--checked") :
+      this.refs.checkbox.classList.toggle("checkbox--checked") 
   }
 
-  handleClick = (e) => {
-    this.props.action(this.props.rawKey, this.state.visible)
+  check = () => {
+    this.props.action(this.props.termBlockRef, this.props.rawKey, false)
+    this.refs.checkbox.classList.add("checkbox--checked")
+  }
 
+  uncheck = () => {
+    this.props.action(this.props.termBlockRef, this.props.rawKey, true)
+    this.refs.checkbox.classList.remove("checkbox--checked")
+  }
+  
+  handleClick = (e) => {
+    this.props.action(this.props.termBlockRef, this.props.rawKey)
     this.toggleChecked()
   }
 
@@ -196,47 +230,97 @@ class LanguageCheckBox extends Component {
 
 
 
-export const LanguageFilterPopup = (props) => (
-  <Backdrop
-    self={props.self}
-    clickToClose={true}
-    >
-    <div
-      className="popup"
-      onClick={(e) => {e.stopPropagation()}}
+export class LanguageFilterPopup extends Component {
+  constructor(props) {
+    super(props)
+
+    this.refs = React.createRef()
+    let languageCheckboxes = props.languages
+      .sort((a, b) => {
+        let [langA, regionA] = a.split('-')
+        let [langB, regionB] = b.split('-')
+        let fullA = Languages[langA] + Regions[regionA]
+        let fullB = Languages[langB] + Regions[regionB]
+        return (fullA === fullB) ? 0 : 
+          (fullA < fullB) ? -1 : 1
+      })
+      .map(key => {
+        let [lang, region] = key.split('-')
+        return (<LanguageCheckBox
+          key={`languageCheckBox_${key}`}
+          termBlockRef={props.termBlockRefs[`lb${key}`]}
+          parent={this}
+          registrationHandler={this.registerChildFunctions}
+          checked=''
+          rawKey={key}
+          langKey={lang}
+          regionKey={region}
+          action={props.action}
+          />)})
+
+    this.state = {
+      languageCheckboxFunctions: {},
+      languageCheckboxes: languageCheckboxes
+    }
+  }
+
+  registerChildFunctions = (languageCheckbox) => {
+    let languageCheckboxFunctions = this.state.languageCheckboxFunctions
+    languageCheckboxFunctions[languageCheckbox.props.rawKey] = {
+          check: languageCheckbox.check,
+          uncheck: languageCheckbox.uncheck
+    }
+    
+    this.setState({
+      languageCheckboxFunctions: languageCheckboxFunctions
+    })
+  }
+
+  checkAll = () => Object.getOwnPropertyNames(this.state.languageCheckboxFunctions).forEach(
+    key => this.state.languageCheckboxFunctions[key].check.call(this.state.languageCheckboxes[key])
+  )
+
+  uncheckAll = () => Object.getOwnPropertyNames(this.state.languageCheckboxFunctions).forEach(
+    key => this.state.languageCheckboxFunctions[key].uncheck.call(this.state.languageCheckboxes[key])
+  )
+
+  render = () => (
+    <Backdrop
+      self={this.props.self}
+      clickToClose={true}
       >
       <div
-        className="popup__content"
+        className="popup"
+        onClick={(e) => {e.stopPropagation()}}
         >
-        <p className="card-title card-title__popup">
-          Language Filter
-        </p>
         <div
-          className="popup__content__checkboxContainer x-small"
+          className="popup__content"
           >
-          { props.languages.sort((a, b) => {
-                let [langA, regionA] = a.split('-')
-                let [langB, regionB] = b.split('-')
-                let fullA = Languages[langA] + Regions[regionA]
-                let fullB = Languages[langB] + Regions[regionB]
-                return (fullA === fullB) ? 0 : 
-                  (fullA < fullB) ? -1 : 1
-              })
-              .map(key => {
-                let [lang, region] = key.split('-')
-                return (<LanguageCheckBox
-                  key={`languageCheckBox_${key}`}
-                  rawKey={key}
-                  langKey={lang}
-                  regionKey={region}
-                  action={props.action}
-                  />)})
-          }
+          <p className="card-title card-title__popup">
+            Language Filter
+          </p>
+          
+          <div
+            className="popup__content__checkboxContainer x-small">
+            <div className="popup__content__checkAllContainer">
+              <MassCheckBox
+                id="uncheckAll"
+                parent={this}
+                handleClick={this.uncheckAll}>
+                  Uncheck all</MassCheckBox>
+              <MassCheckBox
+                id="checkAll"
+                parent={this}
+                handleClick={this.checkAll}>
+                  Check all</MassCheckBox>
+            </div>
+            { this.state.languageCheckboxes }
         </div>
       </div>
     </div>
   </Backdrop>
 )
+}
 
 
 export const SchemaPopup = (props) => (

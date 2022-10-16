@@ -46,6 +46,7 @@ class TermBlock extends Component {
       languageFilterPopup:     <LanguageFilterPopup
                                   self={this.props.self}
                                   languages={Object.keys(termsByLang)}
+                                  termBlockRefs={this.refs}
                                   action={this.handleLanguageCheckChanged}
                                 />
     })
@@ -67,7 +68,7 @@ class TermBlock extends Component {
 
   search(content) {
     for (let key in this.state.termDict) {
-      (!this.state.termDict[key].toLowerCase().includes(content)) ?
+      (!this.state.termDict[key].toLowerCase().includes(content.toLowerCase())) ?
         this.refs[key].style.display = 'none' :
         this.refs[key].style.display = 'inline'
     }
@@ -82,7 +83,6 @@ class TermBlock extends Component {
   }
 
   collapse(langRef) {
-    console.log(langRef)
     this.refs[langRef].style.display = 'none'
     this.refs[langRef+'_arrow'].className = this.refs[langRef+'_arrow'].className
       .replace('collapse-arrow-down', 'collapse-arrow-left')
@@ -94,15 +94,11 @@ class TermBlock extends Component {
       .replace('collapse-arrow-left', 'collapse-arrow-down')
   }
 
-  handleLanguageCheckChanged(value, isVisible = null) {
-    if (isVisible === null) {
-      isVisible = $(`#term-block__lang-block--${value}`)[0].hidden
-    }
+  handleLanguageCheckChanged(ref, value, hidden = null) {
+    ref.hidden = hidden ?? !ref.hidden
 
-    $(`#term-block__lang-block--${value}`)[0].hidden = !isVisible
-
-    if ($(`#lang-card_${value}`)[0]) {
-      $(`#lang-card_${value}`)[0].hidden = !isVisible
+    if ($(`#lang-card_${value}`)) {
+      $(`#lang-card_${value}`).hidden = !ref.hidden
     }
   }
 
@@ -141,7 +137,7 @@ class TermBlock extends Component {
           })
 
           langBlocks.push(
-            <div key={`l${key}`} id={`term-block__lang-block--${key}`} className="term-block__lang-block">
+            <div ref={`lb${key}`} key={`l${key}`} id={`term-block__lang-block--${key}`} className="term-block__lang-block">
               <div className="term-block__lang-block____name" onClick={e => this.collapseLangBlock(`l${key}`)}>
                 <strong>{Languages[langCode]}{regCode && '-' + Regions[regCode]}</strong>
                 <div ref={`l${key}_arrow`} className="collapse-arrow-down"/>
