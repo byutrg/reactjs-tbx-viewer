@@ -5,9 +5,9 @@ name: Yarn Install && Build
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "qol-improvements" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "qol-improvements" ]
 
 jobs:
   build:
