@@ -34,6 +34,12 @@ jobs:
     - run: yarn build
     - run: yarn test
     
+    
+    - name: 'upload'
+      uses: actions/upload-pages-artifact@v1.0.4
+      with: 
+        path: ./build
+    
   deploy:
     needs: build
     permissions:
@@ -44,6 +50,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deploy
+        name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
+        with:
+          token: ${{ github.token }}
