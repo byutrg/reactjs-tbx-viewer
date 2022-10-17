@@ -18,7 +18,7 @@ class Viewer extends Component {
     this.loadConfig()
     this.refs = React.createRef()
     this.state = {
-      appVersion: "0.1-beta",
+      appVersion: "0.2.0",
       conceptEntry: null,
       popup: ''
     }
